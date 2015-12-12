@@ -1,4 +1,4 @@
-package co.ronash.pushedemo;
+package co.ronash.pushesampleas;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
