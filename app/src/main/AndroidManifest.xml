@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="co.ronash.pushe.service.UpdateReceiver" >
+        <receiver android:name="co.ronash.pushe.receiver.UpdateReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
 
@@ -48,7 +48,7 @@
             </intent-filter>
         </receiver>
 
-        <meta-data android:name="co.ronash.pushe.token" android:value="20-e083-48_708579527007"/>
+        <meta-data android:name="co.ronash.pushe.token" android:value="41-a61e-48_229448831041"/>
     </application>
 
 </manifest>
