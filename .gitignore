@@ -29,7 +29,7 @@ proguard/
 # Android Studio
 .idea/
 
-*iml
+*.iml
 
 .gradle
 /local.properties
