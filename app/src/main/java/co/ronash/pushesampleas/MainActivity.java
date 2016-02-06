@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 
 import co.ronash.pushe.Pushe;
-import co.ronash.pushedemo.R;
 
 public class MainActivity extends AppCompatActivity {
 
