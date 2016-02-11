@@ -22,7 +22,7 @@ You have to add some lines to these files:
 ```
 dependencies {
    compile 'co.ronash.pushe:android-lib:0.8.1'
-   compile 'com.google.android.gms:play-services-gcm:7.5.0'
+   compile 'com.google.android.gms:play-services-gcm:8.4.0'
 }
 
 ```
@@ -35,7 +35,7 @@ Add contants of your downloaded `CopyToManifestForAndroidStudio.xml` to your `An
 
 `import co.ronash.pushe.Pushe`
 
-Add the folowing in your onCreate() method
+Add the folowing code in your `onCreate()` method
 
 `Pushe.initialize(this, true);`
 
