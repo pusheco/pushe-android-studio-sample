@@ -21,21 +21,21 @@ You have to add some lines to these files:
 #### build.gradle
 ```
 dependencies {
-   compile 'co.ronash.pushe:android-lib:0.8.1'
+   compile 'co.ronash.android:pushe-base:0.10.0'
    compile 'com.google.android.gms:play-services-gcm:7.5.0'
 }
 
 ```
 #### AndroidManifest.xml
 
-Add contants of your downloaded `CopyToManifestForAndroidStudio.xml` to your `AndroidManifest.xml`.
+Add constants of your downloaded `CopyToManifestForAndroidStudio.xml` to your `AndroidManifest.xml`.
 
 
 #### MainActivity.java
 
 `import co.ronash.pushe.Pushe`
 
-Add the folowing in your onCreate() method
+Add the following in your onCreate() method
 
 `Pushe.initialize(this, true);`
 
