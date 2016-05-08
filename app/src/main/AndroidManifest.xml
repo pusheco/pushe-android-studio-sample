@@ -48,7 +48,7 @@
             </intent-filter>
         </receiver>
 
-        <meta-data android:name="co.ronash.pushe.token" android:value="41-a61e-48_229448831041"/>
+        <meta-data android:name="co.ronash.pushe.token" android:value="t_229448831041"/>
     </application>
 
 </manifest>
