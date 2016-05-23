@@ -8,8 +8,8 @@ android {
         applicationId "co.ronash.pushesampleas"
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 3
-        versionName "2.1"
+        versionCode 4
+        versionName "2.2"
     }
     buildTypes {
         release {
@@ -27,6 +27,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.google.android.gms:play-services-gcm:7.5.0'
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile project(':pushelib-releaseForTest')
 }
