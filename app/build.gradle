@@ -15,9 +15,7 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            zipAlignEnabled true
         }
-
         debug {
             debuggable true
         }
@@ -27,6 +25,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.google.android.gms:play-services-gcm:8.4.0'
-    compile project(':pushelib-releaseForTest')
+    compile 'com.google.android.gms:play-services-gcm:7.5.0'
+    compile 'co.ronash.android:pushe-base:0.10.2'
 }
