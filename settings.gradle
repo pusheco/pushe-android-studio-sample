@@ -1,1 +1,1 @@
-include ':app', ':pushelib-releaseForTest'
+include ':app'
