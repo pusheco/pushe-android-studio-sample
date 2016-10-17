@@ -1,4 +1,4 @@
-package co.ronash.pushesampleas;
+package co.ronash.pushesample.as;
 
 import org.json.JSONObject;
 
@@ -12,7 +12,9 @@ import co.ronash.pushe.PusheListenerService;
 public class MyPushListener extends PusheListenerService {
     @Override
     public void onMessageReceived(JSONObject message,JSONObject content) {
-        android.util.Log.i("Pushe","Custom json Message: "+ message.toString());
-        //    your code
+        if(message != null && message.length() > 2) {
+            android.util.Log.i("Pushe", "Custom json Message: " + message.toString());
+            //    your code
+        }
     }
 }

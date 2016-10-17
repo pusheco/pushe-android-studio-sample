@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="co.ronash.pushesampleas">
+    package="co.ronash.pushesample.as">
 
     <uses-sdk
         tools:overrideLibrary="co.ronash.pushe" />
 
     <permission
-        android:name="co.ronash.pushesampleas.permission.C2D_MESSAGE"
+        android:name="co.ronash.pushesample.as.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="co.ronash.pushesampleas.permission.C2D_MESSAGE" />
+    <uses-permission android:name="co.ronash.pushesample.as.permission.C2D_MESSAGE" />
     <!-- Optional permissions -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -31,7 +31,7 @@
         </activity>
 
         <service
-            android:name="co.ronash.pushesampleas.MyPushListener"
+            android:name=".MyPushListener"
             android:exported="false">
             <intent-filter>
                 <action android:name="co.ronash.pushe.RECEIVE" />
@@ -43,7 +43,7 @@
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
 
                 <data
-                    android:path="co.ronash.pushesampleas"
+                    android:path="co.ronash.pushesample.as"
                     android:scheme="package" />
             </intent-filter>
         </receiver>
@@ -57,11 +57,11 @@
 
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <category android:name="co.ronash.pushesampleas" />
+                <category android:name="co.ronash.pushesample.as" />
             </intent-filter>
         </receiver>
 
-        <meta-data android:name="co.ronash.pushe.token" android:value="PUSHE_288205798291"/>
+        <meta-data android:name="co.ronash.pushe.token" android:value="PUSHE_76583046756"/>
     </application>
 
 </manifest>

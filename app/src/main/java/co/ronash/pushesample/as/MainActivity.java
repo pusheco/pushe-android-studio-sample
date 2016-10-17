@@ -1,4 +1,4 @@
-package co.ronash.pushesampleas;
+package co.ronash.pushesample.as;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
