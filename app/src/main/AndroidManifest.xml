@@ -62,6 +62,7 @@
         </receiver>
 
         <meta-data android:name="co.ronash.pushe.token" android:value="PUSHE_76583046756"/>
+        <meta-data android:name="co.ronash.pushe.cr" android:value="aHR0cDovLzJhM2I3ODRlZDllNDRhOGY5MTc1Mjg3MjdkMTg5NzNkOmJkMzE3ODYzMTUxYjQ0YzBhMjA4NDcyZDI5ODM0M2YxQGxvZ3Muc2VsaS5pcjo4MDgwLzQ="/>
     </application>
 
 </manifest>
