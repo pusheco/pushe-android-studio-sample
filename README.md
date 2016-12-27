@@ -42,7 +42,7 @@ Add the following in your onCreate() method
 `Pushe.initialize(this, true);`
 
 Now run and install your app on a device or emulator that has google-play-service installed.
-Pushe needs minimum api=9 and google-play-service version >= 3 to run.
+Pushe needs minimum android api=9 and google-play-service version >= 3 to run.
 
 ## More Info
 For detailed documentations visit http://docs.pushe.co
