@@ -34,7 +34,7 @@ and paste it in your `AndroidManifest.xml`.
 
 #### MainActivity.java
 
-By MainActivity.java, we mean our launcher activity. It may has another name though.
+By MainActivity.java, we mean your launcher activity. It may has another name.
 `import co.ronash.pushe.Pushe`
 
 Add the following in your onCreate() method
