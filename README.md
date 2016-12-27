@@ -50,8 +50,8 @@ For detailed documentations visit http://docs.pushe.co
 
 ## Support 
 #### Email:
-If you have any problem, please contact us using below email, we will get back to you right away.
-support [at] pushe.co
+If you have any problem, please contact us using this email, we will get back to you right away:
+`support [at] pushe.co`
 #### Phone:
 +98-21-44668276 (8:00 to 17:00 Sat-Thu)
 
