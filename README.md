@@ -55,6 +55,3 @@ If you have any problem, please contact us using this email, we will get back to
 #### Phone:
 +98-21-44668276 (8:00 to 17:00 Sat-Thu)
 
-
-
-
