@@ -21,7 +21,7 @@ You have to add some lines to these files:
 #### build.gradle
 ```
 dependencies {
-   compile 'co.ronash.android:pushe-base:1.1.0'
+   compile 'co.ronash.android:pushe-base:1.3.0'
    compile 'com.google.android.gms:play-services-gcm:10.0.+'
 }
 
