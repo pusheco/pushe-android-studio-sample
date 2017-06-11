@@ -1,2 +1,0 @@
-configurations.maybeCreate("default")
-artifacts.add("default", file('pushe-1.3.0-standalone.aar'))

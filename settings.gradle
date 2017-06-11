@@ -1,1 +1,1 @@
-include ':app', ':pushe-1.3.0'
+include ':app'
