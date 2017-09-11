@@ -21,7 +21,7 @@ You have to add some lines to these files:
 #### build.gradle
 ```
 dependencies {
-   compile 'co.ronash.android:pushe-base:1.3.0'
+   compile 'co.ronash.android:pushe-base:1.3.1'
    compile 'com.google.android.gms:play-services-gcm:10.0.+'
 }
 
@@ -52,6 +52,5 @@ For detailed documentations visit http://docs.pushe.co
 #### Email:
 If you have any problem, please contact us using this email, we will get back to you right away:
 `support [at] pushe.co`
-#### Phone:
-+98-21-44668276 (8:00 to 17:00 Sat-Thu)
+
 

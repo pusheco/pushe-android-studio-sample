@@ -32,6 +32,13 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".NotifBroadcastReceiver">
+            <intent-filter>
+                <action android:name="co.ronash.pushe.NOTIF_CLICKED"/>
+                <action android:name="co.ronash.pushe.NOTIF_DISMISSED" />
+                <action android:name="co.ronash.pushe.NOTIF_BTN_CLICKED" />
+            </intent-filter>
+        </receiver>
         <service
             android:name=".MyPushListener"
             android:exported="false">

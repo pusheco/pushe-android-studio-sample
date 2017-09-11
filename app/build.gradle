@@ -26,5 +26,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.0.+'
     compile 'com.google.android.gms:play-services-gcm:10.0.1'
-    compile 'co.ronash.android:pushe-base:1.3.1'
+        compile 'co.ronash.android:pushe-base:1.3.1'
 }
