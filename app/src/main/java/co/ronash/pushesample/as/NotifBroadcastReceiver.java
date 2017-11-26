@@ -18,15 +18,15 @@ import co.ronash.pushe.Constants;
 public class NotifBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        if(intent.getAction().equals("co.ronash.pushe.NOTIF_CLICKED")){
+        if(intent.getAction().equals(context.getPackageName()+"co.ronash.pushe.NOTIF_CLICKED")){
             Log.i("Pushe", "Broadcast co.ronash.pushe.NOTIF_CLICKED received");
             //add your logic here
         }
-        else if(intent.getAction().equals("co.ronash.pushe.NOTIF_DISMISSED")){
+        else if(intent.getAction().equals(context.getPackageName()+"co.ronash.pushe.NOTIF_DISMISSED")){
             Log.i("Pushe", "Broadcast co.ronash.pushe.NOTIF_DISMISSED received");
             //add your logic here
         }
-        else if(intent.getAction().equals("co.ronash.pushe.NOTIF_BTN_CLICKED")){
+        else if(intent.getAction().equals(context.getPackageName()+"co.ronash.pushe.NOTIF_BTN_CLICKED")){
             String btnId = intent.getStringExtra("pushe_notif_btn_id");
             Log.i("Pushe", "Broadcast co.ronash.pushe.NOTIF_BTN_CLICKED received. BtnId =  " + btnId);
             //add your logic here

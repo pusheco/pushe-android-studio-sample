@@ -34,9 +34,9 @@
 
         <receiver android:name=".NotifBroadcastReceiver">
             <intent-filter>
-                <action android:name="co.ronash.pushe.NOTIF_CLICKED"/>
-                <action android:name="co.ronash.pushe.NOTIF_DISMISSED" />
-                <action android:name="co.ronash.pushe.NOTIF_BTN_CLICKED" />
+                <action android:name="${applicationId}.co.ronash.pushe.NOTIF_CLICKED"/>
+                <action android:name="${applicationId}.co.ronash.pushe.NOTIF_DISMISSED" />
+                <action android:name="${applicationId}.co.ronash.pushe.NOTIF_BTN_CLICKED" />
             </intent-filter>
         </receiver>
         <service
@@ -58,7 +58,7 @@
         </receiver>
 
         <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:name="co.ronash.pushe.receiver.PusheGcmReceiver"
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
