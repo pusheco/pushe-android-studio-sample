@@ -20,12 +20,12 @@ public class MyPushListener extends PusheListenerService {
     public void onMessageReceived(final JSONObject message, JSONObject content) {
         if(message != null && message.length() > 0) {
             android.util.Log.i("Pushe", "Custom json Message: " + message.toString());
-            //    your code
-            try {
-                String s1 = message.getString("key1");
-            } catch (JSONException e) {
-                android.util.Log.e("","Exception in parsin json" ,e);
-            }
+//            //    your code
+//            try {
+//                String s1 = message.getString("key1");
+//            } catch (JSONException e) {
+//                android.util.Log.e("","Exception in parsin json" ,e);
+//            }
         }
     }
 }
