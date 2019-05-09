@@ -3,12 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="co.ronash.pushesample.as">
 
-    <uses-sdk
-        tools:overrideLibrary="co.ronash.pushe" />
-
-    <permission
-        android:name="co.ronash.pushesample.as.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
     <uses-permission android:name="co.ronash.pushesample.as.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -17,7 +11,8 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -27,47 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <receiver android:name=".NotifBroadcastReceiver">
-            <intent-filter>
-                <action android:name="${applicationId}.co.ronash.pushe.NOTIF_CLICKED"/>
-                <action android:name="${applicationId}.co.ronash.pushe.NOTIF_DISMISSED" />
-                <action android:name="${applicationId}.co.ronash.pushe.NOTIF_BTN_CLICKED" />
-            </intent-filter>
-        </receiver>
-        <service
-            android:name=".MyPushListener"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="co.ronash.pushe.RECEIVE" />
-            </intent-filter>
-        </service>
-
-        <receiver android:name="co.ronash.pushe.receiver.UpdateReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REPLACED" />
-
-                <data
-                    android:path="co.ronash.pushesample.as"
-                    android:scheme="package" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <category android:name="co.ronash.pushesample.as" />
-            </intent-filter>
-        </receiver>
-
         <meta-data android:name="co.ronash.pushe.token" android:value="PUSHE_76583046756"/>
-        <meta-data android:name="co.ronash.pushe.cr" android:value="aHR0cDovLzcxOTI5YWQ2ZGEyNjQ4ZDhhMWE5ZDQxNmEwZGRmNWExOjE0ZTM5ZWMyZTE2OTRhNWM4MGNkNzMzYTIyYjlkZmE2QGNhLnB1c2hlLmNvLzQxNDI="/>
     </application>
 
 </manifest>

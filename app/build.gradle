@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "co.ronash.pushesample.as"
-        minSdkVersion 14
-        targetSdkVersion 26
-        versionCode 11
-        versionName "pushe-v1.4.0"
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 12
+        versionName "1.6.3"
     }
     buildTypes {
         release {
@@ -23,9 +23,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:26.0.2'
-    compile 'co.ronash.android:pushe-base:1.4.0'
-    compile 'com.google.android.gms:play-services-gcm:11.8.0'
-    compile 'com.google.android.gms:play-services-location:11.8.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-media-compat:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'co.ronash.android:pushe-base:1.6.3'
 }
