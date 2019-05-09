@@ -1,51 +1,38 @@
 # Android Studio Sample for Pushe.co
 
-This is a sample application (in Android Studio) powered by [Pushe](http://pushe.co) push notification service.
+Simple implementation of [Pushe](http://pushe.co) SDK using Android studio and Java.
 
 You can see other samples:
+
+* [Unity](https://github.com/ronashco/pushe-unity-sample)
+* [Basic4Android](https://github.com/ronashco/pushe-ba4-sample)
 * [Eclipse](https://github.com/ronashco/pushe-eclipse-sample)
-* [Unity (coming soon)](https://github.com/ronashco/pushe-unity-sample)
-* [Basic4Android (coming soon)](https://github.com/ronashco/pushe-ba4-sample)
 
-For a complete demo app and Wiki you may **Pushe Android Demo**
-* [pushe-android-demo on github](https://github.com/pusheco/pushe)
-* [Pushe Demo App on Google Play](http://pushe.co/static/images/googleplay-logo.png)
-
-## Installation 
-You have to add some lines to these files:
-
-* build.gradle
-* AndroidManifest.xml
-* MainActivity.java
-
-#### build.gradle
-```
+#### Installation
+```groovy
 dependencies {
-   compile 'co.ronash.android:pushe-base:1.3.1'
-   compile 'com.google.android.gms:play-services-gcm:10.0.+'
+   implementation 'co.ronash.android:pushe-base:1.6.3' // Or compile for lower gradles
 }
 
 ```
 #### AndroidManifest.xml
-You need to make an account in our site at `http://panel.pushe.co` and create an application using your
-applicationId (or packagename) of your app. After creating your application, copy the content of manifest file
-and paste it in your `AndroidManifest.xml`.
+
+Go to [Pushe console](https://console.pushe.co) and get the manifest content and add it to your project `AndroidManifest.xml`
 
 
 #### MainActivity.java
 
-By MainActivity.java, we mean your launcher activity. It may has another name.
-`import co.ronash.pushe.Pushe`
+In your activity add this to `onCreate()` method:
 
-Add the following in your onCreate() method
-
-`Pushe.initialize(this, true);`
+```java
+Pushe.initialize(this, true);
+```
 
 Now run and install your app on a device or emulator that has google-play-service installed.
-Pushe needs minimum android api=9 and google-play-service version >= 3 to run.
+Pushe needs minimum android api=15 and google-play-service version >= 3 to run.
 
 ## More Info
-For detailed documentations visit http://docs.pushe.co
+For detailed documentations visit http://pushe.co/docs
 
 
 ## Support 
