@@ -32,7 +32,7 @@ Now run and install your app on a device or emulator that has google-play-servic
 Pushe needs minimum android api=15 and google-play-service version >= 3 to run.
 
 ## More Info
-For detailed documentations visit http://pushe.co/docs
+For detailed documentations visit https://pushe.co/docs/android-studio/
 
 
 ## Support 
