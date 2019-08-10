@@ -9,17 +9,16 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -27,7 +26,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.ronash.pushe.Pushe;
-import co.ronash.pushe.j.c;
 import co.ronash.pushesample.as.R;
 import co.ronash.pushesample.as.eventbus.MessageEvent;
 import co.ronash.pushesample.as.utils.Stuff;
@@ -56,12 +54,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         try {
-            toolbar.setSubtitle("version: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
+            toolbar.setSubtitle("v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName + " || click each icon to see info");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
 
-        status.setText("Click an action to test it.\nHold item to see information.");
+        status.setText("Click an action to test it.\nClick the info to see information.");
 
         Pushe.initialize(this, true);
 
@@ -96,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                         "Send event"
                 ),
                 handleItemClick(),
-                handleItemLongClick()
+                handleInfoClicked()
         ));
     }
 
@@ -195,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
-    private ItemClickListener handleItemLongClick() {
+    private ItemClickListener handleInfoClicked() {
         return new ItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
@@ -270,12 +268,12 @@ public class MainActivity extends AppCompatActivity {
     class Adapter extends RecyclerView.Adapter<Holder> {
 
         private List<String> dataSet;
-        private ItemClickListener listener, holdListener;
+        private ItemClickListener listener, infoListener;
 
-        Adapter(List<String> dataSet, ItemClickListener listener, ItemClickListener holdListener) {
+        Adapter(List<String> dataSet, ItemClickListener listener, ItemClickListener infoListener) {
             this.dataSet = dataSet;
             this.listener = listener;
-            this.holdListener = holdListener;
+            this.infoListener = infoListener;
         }
 
         @NonNull
@@ -288,17 +286,16 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull final Holder holder, int i) {
             final int position = i;
             holder.action.setText(dataSet.get(position));
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+            holder.action.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     listener.onItemClick(view, position);
                 }
             });
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            holder.info.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onLongClick(View view) {
-                    holdListener.onItemClick(view, position);
-                    return true;
+                public void onClick(View view) {
+                    infoListener.onItemClick(view, position);
                 }
             });
         }
@@ -312,11 +309,12 @@ public class MainActivity extends AppCompatActivity {
     // List view holder
     class Holder extends RecyclerView.ViewHolder {
 
-        TextView action;
+        @BindView(R.id.text) TextView action;
+        @BindView(R.id.info) ImageView info;
 
         Holder(@NonNull View itemView) {
             super(itemView);
-            action = itemView.findViewById(R.id.text);
+            ButterKnife.bind(this, itemView);
         }
     }
 
