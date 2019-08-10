@@ -2,16 +2,24 @@
 
 buildscript {
     repositories {
+        // This repo is needed for Pushe to be downloaded.
+        // If you use a lower gradle version (Here it's 3.4.2), you might see this error:
+        // Dsl method `google()` not found, instead you must use this:
+        // maven { url 'https://maven.google.com' }
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0'
+        classpath 'com.android.tools.build:gradle:3.4.2'
     }
 }
 
 allprojects {
     repositories {
+        // This repo is needed for Pushe to be downloaded.
+        // If you use a lower gradle version (Here it's 3.4.2), you might see this error:
+        // Dsl method `google()` not found, instead you must use this:
+        // maven { url 'https://maven.google.com' }
         google()
         jcenter()
     }

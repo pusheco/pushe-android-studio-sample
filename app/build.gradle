@@ -5,6 +5,8 @@ android {
     buildToolsVersion "28.0.3"
 
     defaultConfig {
+
+        // This is the application id (which must be the package name you add into panel of Pushe)
         applicationId "co.ronash.pushesample.as"
         minSdkVersion 16
         targetSdkVersion 28
@@ -24,7 +26,22 @@ android {
 
 dependencies {
     implementation 'com.android.support:appcompat-v7:28.0.0'
+    // Since Pushe uses `android.support-v4:26.0.2`, using support higher or lower might give you warning of `Version conflict`
+    // To resolve this add libraries that don't have the right version. In this case using `appcompat:28` gives warning that
+    // these two have lower version and not equal to `28.0.0`, So add them with version equal to appcompat
     implementation 'com.android.support:support-media-compat:28.0.0'
     implementation 'com.android.support:support-v4:28.0.0'
+
+    // ButterKnife: To easily connect XML to code
+    //noinspection GradleDependency -- Highers use androidX
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    // Event bus: To send event through application from anywhere to anywhere
+    implementation 'org.greenrobot:eventbus:3.1.1'
+
     implementation 'co.ronash.android:pushe-base:1.6.3'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
 }
