@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 
@@ -30,6 +31,8 @@ import co.ronash.pushesample.as.R;
 import co.ronash.pushesample.as.eventbus.MessageEvent;
 import co.ronash.pushesample.as.utils.Stuff;
 
+import static co.ronash.pushesample.as.utils.Stuff.addText;
+
 /**
  * For further information Go to <a href="https://pushe.co/docs">Docs</a>
  *
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView list;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.statusContainer)
+    ScrollView scroll;
 
 
     @Override
@@ -59,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        status.setText("Click an action to test it.\nClick the info to see information.");
+        status.setText("Click an action to test it.\nClick the info to see information.\n");
 
         Pushe.initialize(this, true);
 
@@ -69,8 +74,15 @@ public class MainActivity extends AppCompatActivity {
         status.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                status.setText("");
+                status.setText("Click an action to test it.\nClick the info to see information.\n");
                 return true;
+            }
+        });
+
+        status.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scroll.fullScroll(View.FOCUS_DOWN);
             }
         });
     }
@@ -109,14 +121,17 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(View v, int position) {
                 switch (position) {
                     case 0: // Initialize
-                        status.setText("Initializing Pushe");
+                        addText(status, "Initializing Pushe");
                         Pushe.initialize(MainActivity.this, true);
+                        scroll.fullScroll(View.FOCUS_DOWN);
                         break;
                     case 1: // Check init
-                        status.setText("Pushe initialized: " + Pushe.isPusheInitialized(MainActivity.this));
+                        addText(status, "Pushe initialized: " + Pushe.isPusheInitialized(MainActivity.this));
+                        scroll.fullScroll(View.FOCUS_DOWN);
                         break;
                     case 2: // PusheId
-                        status.setText("PusheId is: " + Pushe.getPusheId(MainActivity.this));
+                        addText(status, "PusheId is: " + Pushe.getPusheId(MainActivity.this));
+                        scroll.fullScroll(View.FOCUS_DOWN);
                         break;
                     case 3: // Topic
                         Stuff.prompt(MainActivity.this,
@@ -126,7 +141,8 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void accept(String s) {
                                         Pushe.subscribe(MainActivity.this, s);
-                                        status.setText("Subscribe to topic: " + s);
+                                        addText(status, "Subscribe to topic: " + s);
+                                        scroll.fullScroll(View.FOCUS_DOWN);
                                     }
                                 });
                         break;
@@ -138,7 +154,8 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void accept(String s) {
                                         Pushe.unsubscribe(MainActivity.this, s);
-                                        status.setText("Unsubscribe from topic: " + s);
+                                        addText(status, "Unsubscribe from topic: " + s);
+                                        scroll.fullScroll(View.FOCUS_DOWN);
                                     }
                                 });
                         break;
@@ -151,7 +168,8 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void accept(String pusheId) {
                                         Pushe.sendSimpleNotifToUser(MainActivity.this, pusheId, "title1", "content1");
-                                        status.setText("Sending simple notification to user.\ntitle: title1\ncontent: content1\nPusheId: " + pusheId);
+                                        addText(status, "Sending simple notification to user.\ntitle: title1\ncontent: content1\nPusheId: " + pusheId);
+                                        scroll.fullScroll(View.FOCUS_DOWN);
                                     }
                                 });
                         break;
@@ -168,7 +186,8 @@ public class MainActivity extends AppCompatActivity {
                                             object.put("title", "title1");
                                             object.put("content", "content1");
                                             Pushe.sendAdvancedNotifToUser(MainActivity.this, pusheId, object.toString());
-                                            status.setText("Sending advanced notification:\nNotification: " + object.toString() + "\nPusheId: " + pusheId);
+                                            addText(status, "Sending advanced notification:\nNotification: " + object.toString() + "\nPusheId: " + pusheId);
+                                            scroll.fullScroll(View.FOCUS_DOWN);
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
@@ -185,7 +204,8 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void accept(String event) {
                                         Pushe.sendEvent(MainActivity.this, event);
-                                        status.setText("Sending event: " + event);
+                                        addText(status, "Sending event: " + event);
+                                        scroll.fullScroll(View.FOCUS_DOWN);
                                     }
                                 });
                 }
@@ -246,7 +266,8 @@ public class MainActivity extends AppCompatActivity {
     // region EventBus
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        status.setText(event.getMessage());
+        addText(status, event.getMessage());
+        scroll.fullScroll(View.FOCUS_DOWN);
     }
 
     @Override

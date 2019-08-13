@@ -5,8 +5,11 @@ import android.content.DialogInterface;
 import android.support.v4.util.Consumer;
 import android.support.v7.app.AlertDialog;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class Stuff {
@@ -89,5 +92,20 @@ public class Stuff {
                 .setPositiveButton("OK", null)
                 .create()
                 .show();
+    }
+
+    /**
+     * Add text instead of replacing the text in android studio.
+     * Takes a textView and a text and adds the text to the textView.
+     */
+    public static void addText(TextView textView, String text) {
+        if (textView == null) return;
+        String currentText = (String) textView.getText();
+        if (currentText == null) currentText = "";
+        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+        String newText = currentText + "\n-----\n"  + text + "\nTime: " + currentDateTimeString + "\n";
+
+
+        textView.setText(newText);
     }
 }
