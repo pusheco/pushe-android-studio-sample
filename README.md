@@ -1,4 +1,4 @@
-# Android Studio Sample for Pushe.co
+# Pushe for Android native
 
 Simple implementation of [Pushe](http://pushe.co) SDK using Android studio and Java.
 
@@ -15,7 +15,7 @@ You can see other samples:
 `git clone https://github.com/pusheco/android-studio-sample.git`
 * Open it with Android studio and run it on your device.
 
-#### Installation
+#### Installation on your project
 ```groovy
 dependencies {
    implementation 'co.ronash.android:pushe-base:1.6.3' // Or compile for lower gradles
@@ -38,9 +38,9 @@ The value `PUSHE_76583046756` is for demo panel. Replace it with your own token.
 And if you need location-based features, add `Location permission` to the manifest as well.
 
 
-#### MainActivity.java
+#### Add the codes
 
-In your activity add this to `onCreate()` method:
+In your Application or activity class, add this to `onCreate()` method:
 
 ```java
 Context context = this.getApplicationContext(); // This is optional. The `initialize` needs a context. Provide it from anywhere you want.
