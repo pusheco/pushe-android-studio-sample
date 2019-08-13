@@ -8,6 +8,13 @@ You can see other samples:
 * [Basic4Android](https://github.com/ronashco/pushe-ba4-sample)
 * [Eclipse](https://github.com/ronashco/pushe-eclipse-sample)
 
+#### Run the example
+
+* Install git if you don't have it.
+* Run:
+`git clone https://github.com/pusheco/android-studio-sample.git`
+* Open it with Android studio and run it on your device.
+
 #### Installation
 ```groovy
 dependencies {
