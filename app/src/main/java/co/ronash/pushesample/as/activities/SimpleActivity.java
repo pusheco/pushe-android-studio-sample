@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import co.ronash.pushe.Pushe;
 import co.ronash.pushesample.as.R;
 
 public class SimpleActivity extends AppCompatActivity {
@@ -16,8 +15,6 @@ public class SimpleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-
-        Pushe.initialize(this, true);
 
         findViewById(R.id.advanced).setOnClickListener(new View.OnClickListener() {
             @Override

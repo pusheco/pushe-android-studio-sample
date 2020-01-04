@@ -23,10 +23,17 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import co.ronash.pushe.Pushe;
+import co.pushe.plus.Pushe;
+import co.pushe.plus.analytics.PusheAnalytics;
+import co.pushe.plus.notification.NotificationButtonData;
+import co.pushe.plus.notification.NotificationData;
+import co.pushe.plus.notification.PusheNotification;
+import co.pushe.plus.notification.PusheNotificationListener;
+import co.pushe.plus.notification.UserNotification;
 import co.ronash.pushesample.as.R;
 import co.ronash.pushesample.as.eventbus.MessageEvent;
 import co.ronash.pushesample.as.utils.Stuff;
@@ -66,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
         status.setText("Click an action to test it.\nClick the info to see information.\n");
 
-        Pushe.initialize(this, true);
-
         setupList();
 
         // Clear on long click
@@ -82,6 +87,38 @@ public class MainActivity extends AppCompatActivity {
         status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                scroll.fullScroll(View.FOCUS_DOWN);
+            }
+        });
+
+        Pushe.getPusheService(PusheNotification.class).setNotificationListener(new PusheNotificationListener() {
+            @Override
+            public void onNotification(@NonNull NotificationData notification) {
+                addText(status, "Listener on receiving notification triggered");
+                scroll.fullScroll(View.FOCUS_DOWN);
+            }
+
+            @Override
+            public void onCustomContentNotification(@NonNull Map<String, Object> customContent) {
+                addText(status, "Listener on receiving notification with custom content triggered");
+                scroll.fullScroll(View.FOCUS_DOWN);
+            }
+
+            @Override
+            public void onNotificationClick(@NonNull NotificationData notification) {
+                addText(status, "Listener on clicking on notification triggered");
+                scroll.fullScroll(View.FOCUS_DOWN);
+            }
+
+            @Override
+            public void onNotificationDismiss(@NonNull NotificationData notification) {
+                addText(status, "Listener on dismissing notification triggered");
+                scroll.fullScroll(View.FOCUS_DOWN);
+            }
+
+            @Override
+            public void onNotificationButtonClick(@NonNull NotificationButtonData button, @NonNull NotificationData notification) {
+                addText(status, "Listener on clicking on notification button triggered");
                 scroll.fullScroll(View.FOCUS_DOWN);
             }
         });
@@ -120,17 +157,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 switch (position) {
-                    case 0: // Initialize
-                        addText(status, "Initializing Pushe");
-                        Pushe.initialize(MainActivity.this, true);
-                        scroll.fullScroll(View.FOCUS_DOWN);
-                        break;
                     case 1: // Check init
-                        addText(status, "Pushe initialized: " + Pushe.isPusheInitialized(MainActivity.this));
+                        addText(status, "Pushe initialized: " + Pushe.isInitialized());
                         scroll.fullScroll(View.FOCUS_DOWN);
                         break;
                     case 2: // PusheId
-                        addText(status, "PusheId is: " + Pushe.getPusheId(MainActivity.this));
+                        addText(status, "PusheId is: " + Pushe.getPusheId());
                         scroll.fullScroll(View.FOCUS_DOWN);
                         break;
                     case 3: // Topic
@@ -140,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                                 new Consumer<String>() {
                                     @Override
                                     public void accept(String s) {
-                                        Pushe.subscribe(MainActivity.this, s);
+                                        Pushe.subscribeToTopic(s);
                                         addText(status, "Subscribe to topic: " + s);
                                         scroll.fullScroll(View.FOCUS_DOWN);
                                     }
@@ -153,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                                 new Consumer<String>() {
                                     @Override
                                     public void accept(String s) {
-                                        Pushe.unsubscribe(MainActivity.this, s);
+                                        Pushe.unsubscribeFromTopic( s);
                                         addText(status, "Unsubscribe from topic: " + s);
                                         scroll.fullScroll(View.FOCUS_DOWN);
                                     }
@@ -162,39 +194,19 @@ public class MainActivity extends AppCompatActivity {
                     case 5: // Send to user
                         Stuff.prompt(MainActivity.this,
                                 "Send simple notification to user",
-                                "Enter pusheId\nMessage:{title:title1, content:content1}",
-                                Pushe.getPusheId(MainActivity.this),
+                                "Enter androidId\nMessage:{title:title1, content:content1}",
+                                Pushe.getAndroidId(),
                                 new Consumer<String>() {
                                     @Override
-                                    public void accept(String pusheId) {
-                                        Pushe.sendSimpleNotifToUser(MainActivity.this, pusheId, "title1", "content1");
-                                        addText(status, "Sending simple notification to user.\ntitle: title1\ncontent: content1\nPusheId: " + pusheId);
+                                    public void accept(String androidId) {
+                                        UserNotification userNotification = UserNotification.withAndroidId(androidId);
+                                        userNotification.setTitle("title1");
+                                        userNotification.setContent("content1");
+                                        Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification);
+                                        addText(status, "Sending simple notification to user.\ntitle: title1\ncontent: content1\nAndroidId: " + androidId);
                                         scroll.fullScroll(View.FOCUS_DOWN);
                                     }
                                 });
-                        break;
-                    case 6: // send advanced to user
-                        Stuff.prompt(MainActivity.this,
-                                "Send advanced notification to user",
-                                "Enter pusheId\nMessage:{title:title1, content:content1}",
-                                Pushe.getPusheId(MainActivity.this),
-                                new Consumer<String>() {
-                                    @Override
-                                    public void accept(String pusheId) {
-                                        try {
-                                            JSONObject object = new JSONObject();
-                                            object.put("title", "title1");
-                                            object.put("content", "content1");
-                                            Pushe.sendAdvancedNotifToUser(MainActivity.this, pusheId, object.toString());
-                                            addText(status, "Sending advanced notification:\nNotification: " + object.toString() + "\nPusheId: " + pusheId);
-                                            scroll.fullScroll(View.FOCUS_DOWN);
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
-
-                                    }
-                                }
-                        );
                         break;
                     case 7: // send event
                         Stuff.prompt(MainActivity.this,
@@ -203,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
                                 new Consumer<String>() {
                                     @Override
                                     public void accept(String event) {
-                                        Pushe.sendEvent(MainActivity.this, event);
+                                        Pushe.getPusheService(PusheAnalytics.class).sendEvent(event);
                                         addText(status, "Sending event: " + event);
                                         scroll.fullScroll(View.FOCUS_DOWN);
                                     }
