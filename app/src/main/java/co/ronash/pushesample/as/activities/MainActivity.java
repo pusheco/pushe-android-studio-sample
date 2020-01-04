@@ -133,13 +133,11 @@ public class MainActivity extends AppCompatActivity {
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setAdapter(new Adapter(
                 Stuff.listOf(
-                        "Manually Initialize Pushe",
                         "Check initialized",
                         "Get PusheId",
                         "Subscribe to topic",
                         "Unsubscribe from topic",
                         "Send notification to user",
-                        "Send advanced notification to user",
                         "Send event"
                 ),
                 handleItemClick(),
@@ -157,15 +155,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 switch (position) {
-                    case 1: // Check init
+                    case 0: // Check init
                         addText(status, "Pushe initialized: " + Pushe.isInitialized());
                         scroll.fullScroll(View.FOCUS_DOWN);
                         break;
-                    case 2: // PusheId
+                    case 1: // PusheId
                         addText(status, "PusheId is: " + Pushe.getPusheId());
                         scroll.fullScroll(View.FOCUS_DOWN);
                         break;
-                    case 3: // Topic
+                    case 2: // Topic
                         Stuff.prompt(MainActivity.this,
                                 "Subscribe to Topic",
                                 "Enter topic name (Must be english character)",
@@ -178,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
                         break;
-                    case 4: // Unsubscribe
+                    case 3: // Unsubscribe
                         Stuff.prompt(MainActivity.this,
                                 "Unsubscribe from Topic",
                                 "Enter topic name",
@@ -191,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
                         break;
-                    case 5: // Send to user
+                    case 4: // Send to user
                         Stuff.prompt(MainActivity.this,
                                 "Send simple notification to user",
                                 "Enter androidId\nMessage:{title:title1, content:content1}",
@@ -208,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
                         break;
-                    case 7: // send event
+                    case 5: // send event
                         Stuff.prompt(MainActivity.this,
                                 "Send event",
                                 "Enter event name to send",
@@ -230,44 +228,34 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 switch (position) {
-                    case 0: // Initialize manually
+                    case 0: // Check initialized
                         Stuff.alert(MainActivity.this,
-                                "initialize(context,showDialog)",
-                                "Register this device to pushe and get FCM token from server.\nSecond argument: If googlePlay does not exist or not updated it will show a dialog to install (if set to true)");
-                        break;
-                    case 1: // Check initialized
-                        Stuff.alert(MainActivity.this,
-                                "isPusheInitialized(context)",
+                                "Pushe.isInitialized()",
                                 "Returns true if registration is successful and token is saved.");
                         break;
-                    case 2: // getPusheId
+                    case 1: // getPusheId
                         Stuff.alert(MainActivity.this,
-                                "getPusheId(context)",
+                                "Pushe.getPusheId()",
                                 "Returns a unique id according to androidId and googleAdId which can be used to identify device.");
                         break;
-                    case 3: // subscribe
+                    case 2: // subscribe
                         Stuff.alert(MainActivity.this,
-                                "subscribe(topicName)",
+                                "Pushe.subscribeToTopic(topicName)",
                                 "If you want to add user to a specific group (for example premium), you can subscribe them into a topic.");
                         break;
-                    case 4: // unsubscribe
+                    case 3: // unsubscribe
                         Stuff.alert(MainActivity.this,
-                                "unsubscribe(topicName)",
+                                "Pushe.unsubscribeFromTopic(topicName)",
                                 "If you want to remove user from a specific group (for example premium), you can unsubscribe them from that topic.");
                         break;
-                    case 5: // send to user
+                    case 4: // send to user
                         Stuff.alert(MainActivity.this,
-                                "sendSimpleNotifToUser(context,pusheId,title,content)",
-                                "Having a pusheId of a device, you can send title and content to that device programmatically.");
+                                "Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification)",
+                                "Having an androidId,advertisementId or customId of a device, you can send notification to that device programmatically.");
                         break;
-                    case 6: // send advanced to user
+                    case 5: // send event
                         Stuff.alert(MainActivity.this,
-                                "sendAdvancedNotifToUser(context,pusheId,notificationInJsonFormatAsString)",
-                                "Having a pusheId of a device, you can send complete notification in json format (jsonObject.toString()) to that device programmatically.");
-                        break;
-                    case 7: // send event
-                        Stuff.alert(MainActivity.this,
-                                "sendEvent(context,eventName)",
+                                "Pushe.getPusheService(PusheAnalytics.class).sendEvent(event)",
                                 "If anything has happened in the device, you can send it using this function.");
 
                 }

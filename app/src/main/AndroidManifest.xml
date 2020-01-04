@@ -39,7 +39,7 @@
         <!-- Credential belongs to Pushe demo console. check `pushe.co` -->
         <meta-data
             android:name="pushe_token"
-            android:value="Y28ucm9uYXNoLnB1c2hlc2FtcGxlLmFzQHhpZkA3NjU4MzA0Njc1Ng==`                                                                                " />
+            android:value="Y28ucm9uYXNoLnB1c2hlc2FtcGxlLmFzQHhpZkAxNTQ4OTc4MTg2Mjk=" />
 
         <!-- Custom firebase service for Pushe -->
 
