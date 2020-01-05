@@ -4,8 +4,9 @@
     package="co.ronash.pushesample.as">
 
     <uses-permission android:name="co.ronash.pushesample.as.permission.C2D_MESSAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
 
     <application
         android:allowBackup="false"
