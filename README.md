@@ -2,12 +2,6 @@
 
 Simple implementation of [Pushe](http://pushe.co) SDK using Android studio and Java.
 
-You can see other samples:
-
-* [Unity](https://github.com/ronashco/pushe-unity-sample)
-* [Basic4Android](https://github.com/ronashco/pushe-ba4-sample)
-* [Eclipse](https://github.com/ronashco/pushe-eclipse-sample)
-
 #### Run the example
 
 * Install git if you don't have it.
@@ -18,7 +12,7 @@ You can see other samples:
 #### Installation on your project
 ```groovy
 dependencies {
-   implementation 'co.ronash.android:pushe-base:1.6.3' // Or compile for lower gradles
+   implementation 'co.pushe.plus:base:2.0.4' // Or compile for lower gradles
 }
 
 ```
@@ -26,26 +20,17 @@ dependencies {
 
 Go to [Pushe console](https://console.pushe.co) and get the manifest content and add it to your project `AndroidManifest.xml`
 
-The manifest will be a tag like this:
+The manifest content will be a tag like this:
 
 ```xml
-<meta-data android:name="co.ronash.pushe.token"
-            android:value="PUSHE_76583046756" />
+<meta-data android:name="pushe_token"
+            android:value="Y28ucm9uYXNoLnB1c2hlc2FtcGxlLmFzQHhpZkAxNTQ4OTc4MTg2Mjk=" />
 ```
 
-The value `PUSHE_76583046756` is for demo panel. Replace it with your own token.
+The value `Y28ucm9uYXNoLnB1c2hlc2FtcGxlLmFzQHhpZkAxNTQ4OTc4MTg2Mjk=` is for demo panel. Replace it with your own token.
 
-And if you need location-based features, add `Location permission` to the manifest as well.
+And if you need location-based features, add `Location permissions` to the manifest as well.
 
-
-#### Add the codes
-
-In your Application or activity class, add this to `onCreate()` method:
-
-```java
-Context context = this.getApplicationContext(); // This is optional. The `initialize` needs a context. Provide it from anywhere you want.
-Pushe.initialize(context, true);
-```
 
 #### More features
 
