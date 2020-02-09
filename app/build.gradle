@@ -13,7 +13,7 @@ android {
         versionCode 12
         multiDexEnabled true
 
-        versionName "1.6.3"
+        versionName "2.0.4"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
