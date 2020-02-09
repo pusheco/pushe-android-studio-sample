@@ -51,6 +51,37 @@ public class Stuff {
                     }
                 }).create().show();
     }
+    /**
+     * Shows a dialog having an EditText.
+     * @param callback will be called when user clicked on button1(positive) or button2(negative). Callback contains the text that was entered in editText.
+     * @see Callback which is a simple interface.
+     */
+    public static void prompt(Context activityContext, String title, String message,String hint,String button1,String button2, final Callback<String> callback) {
+        final EditText editText = new EditText(activityContext);
+        editText.setSingleLine();
+        editText.setMaxLines(1);
+        editText.setHint(hint);
+
+        new AlertDialog.Builder(activityContext)
+                .setIcon(android.R.drawable.ic_input_get)
+                .setTitle(title)
+                .setMessage(message)
+                .setView(editText)
+                .setPositiveButton(button1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String text = editText.getText().toString();
+                        callback.onPositiveButtonClicked(text);
+                    }
+                })
+                .setNegativeButton(button2, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String text = editText.getText().toString();
+                        callback.onNegativeButtonClicked(text);
+                    }
+                }).create().show();
+    }
 
     /**
      * Same as the other function but can pass default text to editText.
@@ -107,5 +138,11 @@ public class Stuff {
 
 
         textView.setText(newText);
+    }
+
+    public interface Callback<T>
+    {
+        void onPositiveButtonClicked(T t);
+        void onNegativeButtonClicked(T t);
     }
 }

@@ -22,6 +22,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +42,8 @@ import co.ronash.pushesample.as.eventbus.MessageEvent;
 import co.ronash.pushesample.as.utils.Stuff;
 
 import static co.ronash.pushesample.as.utils.Stuff.addText;
+import static co.ronash.pushesample.as.utils.Stuff.alert;
+import static co.ronash.pushesample.as.utils.Stuff.prompt;
 
 /**
  * For further information Go to <a href="https://pushe.co/docs">Docs</a>
@@ -66,12 +71,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         try {
-            toolbar.setSubtitle("v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName + " || click each icon to see info");
+            toolbar.setSubtitle("v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName );
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
 
-        status.setText("Click an action to test it.\nClick the info to see information.\n");
+        status.setText("Click an action to test it.");
 
         setupList();
 
@@ -79,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         status.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                status.setText("Click an action to test it.\nClick the info to see information.\n");
+                status.setText("Click an action to test it.\n");
                 return true;
             }
         });
@@ -133,16 +138,21 @@ public class MainActivity extends AppCompatActivity {
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setAdapter(new Adapter(
                 Stuff.listOf(
-                        "Check initialized",
-                        "Get PusheId",
-                        "Subscribe to topic",
-                        "Unsubscribe from topic",
-                        "Send notification to user",
-                        "Send event"
+                        "IDs",
+                        "Custom Id",
+                        "Phone Number",
+                        "Email",
+                        "Modules initialization status",
+                        "Device registration status",
+                        "Topic",
+                        "Tag (name:value)",
+                        "Analytics: Event",
+                        "Analytics: E-commerce",
+                        "Notification: AndroidId",
+                        "Notification: GoogleAdId",
+                        "Notification: CustomId"
                 ),
-                handleItemClick(),
-                handleInfoClicked()
-        ));
+                handleItemClick()));
     }
 
     /**
@@ -155,109 +165,199 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 switch (position) {
-                    case 0: // Check init
-                        addText(status, "Pushe initialized: " + Pushe.isInitialized());
+                    case 0:
+                        alert(MainActivity.this, "IDs", "AndroidId:\n" + Pushe.getAndroidId() + "\nGoogleAdId:\n" + Pushe.getGoogleAdvertisingId());
+                        break;
+                    case 1:
+                        prompt(MainActivity.this, "New custom id", "current custom id:" + Pushe.getCustomId(), new Consumer<String>() {
+                            @Override
+                            public void accept(String s) {
+                                Pushe.setCustomId(s);
+                                addText(status, "Custom id is: " + Pushe.getCustomId());
+                                scroll.fullScroll(View.FOCUS_DOWN);
+                            }
+                        });
+
+                        break;
+                    case 2:
+                        prompt(MainActivity.this, "New phone number", "current phone number is:" + Pushe.getUserPhoneNumber(), new Consumer<String>() {
+                            @Override
+                            public void accept(String s) {
+                                Pushe.setUserPhoneNumber(s);
+                                addText(status, "phone number is: " + Pushe.getUserPhoneNumber());
+                                scroll.fullScroll(View.FOCUS_DOWN);
+                            }
+                        });
+                        break;
+                    case 3:
+                        prompt(MainActivity.this, "New Email", "current email is:" + Pushe.getUserEmail(), new Consumer<String>() {
+                            @Override
+                            public void accept(String s) {
+                                Pushe.setUserEmail(s);
+                                addText(status, "user email is: " + Pushe.getUserEmail());
+                                scroll.fullScroll(View.FOCUS_DOWN);
+                            }
+                        });
+
+                        break;
+                    case 4:
+                        addText(status, "modules initialized: " + Pushe.isInitialized());
                         scroll.fullScroll(View.FOCUS_DOWN);
                         break;
-                    case 1: // PusheId
-                        addText(status, "PusheId is: " + Pushe.getPusheId());
+                    case 5:
+                        addText(status, "Device registered: " + Pushe.isRegistered());
                         scroll.fullScroll(View.FOCUS_DOWN);
                         break;
-                    case 2: // Topic
-                        Stuff.prompt(MainActivity.this,
-                                "Subscribe to Topic",
-                                "Enter topic name (Must be english character)",
-                                new Consumer<String>() {
-                                    @Override
-                                    public void accept(String s) {
-                                        Pushe.subscribeToTopic(s);
-                                        addText(status, "Subscribe to topic: " + s);
-                                        scroll.fullScroll(View.FOCUS_DOWN);
-                                    }
-                                });
-                        break;
-                    case 3: // Unsubscribe
-                        Stuff.prompt(MainActivity.this,
-                                "Unsubscribe from Topic",
-                                "Enter topic name",
-                                new Consumer<String>() {
-                                    @Override
-                                    public void accept(String s) {
-                                        Pushe.unsubscribeFromTopic( s);
-                                        addText(status, "Unsubscribe from topic: " + s);
-                                        scroll.fullScroll(View.FOCUS_DOWN);
-                                    }
-                                });
-                        break;
-                    case 4: // Send to user
-                        Stuff.prompt(MainActivity.this,
-                                "Send simple notification to user",
-                                "Enter androidId\nMessage:{title:title1, content:content1}",
-                                Pushe.getAndroidId(),
-                                new Consumer<String>() {
-                                    @Override
-                                    public void accept(String androidId) {
-                                        UserNotification userNotification = UserNotification.withAndroidId(androidId);
-                                        userNotification.setTitle("title1");
-                                        userNotification.setContent("content1");
-                                        Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification);
-                                        addText(status, "Sending simple notification to user.\ntitle: title1\ncontent: content1\nAndroidId: " + androidId);
-                                        scroll.fullScroll(View.FOCUS_DOWN);
-                                    }
-                                });
-                        break;
-                    case 5: // send event
-                        Stuff.prompt(MainActivity.this,
-                                "Send event",
-                                "Enter event name to send",
-                                new Consumer<String>() {
-                                    @Override
-                                    public void accept(String event) {
-                                        Pushe.getPusheService(PusheAnalytics.class).sendEvent(event);
-                                        addText(status, "Sending event: " + event);
-                                        scroll.fullScroll(View.FOCUS_DOWN);
-                                    }
-                                });
-                }
-            }
-        };
-    }
 
-    private ItemClickListener handleInfoClicked() {
-        return new ItemClickListener() {
-            @Override
-            public void onItemClick(View v, int position) {
-                switch (position) {
-                    case 0: // Check initialized
-                        Stuff.alert(MainActivity.this,
-                                "Pushe.isInitialized()",
-                                "Returns true if registration is successful and token is saved.");
-                        break;
-                    case 1: // getPusheId
-                        Stuff.alert(MainActivity.this,
-                                "Pushe.getPusheId()",
-                                "Returns a unique id according to androidId and googleAdId which can be used to identify device.");
-                        break;
-                    case 2: // subscribe
-                        Stuff.alert(MainActivity.this,
-                                "Pushe.subscribeToTopic(topicName)",
-                                "If you want to add user to a specific group (for example premium), you can subscribe them into a topic.");
-                        break;
-                    case 3: // unsubscribe
-                        Stuff.alert(MainActivity.this,
-                                "Pushe.unsubscribeFromTopic(topicName)",
-                                "If you want to remove user from a specific group (for example premium), you can unsubscribe them from that topic.");
-                        break;
-                    case 4: // send to user
-                        Stuff.alert(MainActivity.this,
-                                "Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification)",
-                                "Having an androidId,advertisementId or customId of a device, you can send notification to that device programmatically.");
-                        break;
-                    case 5: // send event
-                        Stuff.alert(MainActivity.this,
-                                "Pushe.getPusheService(PusheAnalytics.class).sendEvent(event)",
-                                "If anything has happened in the device, you can send it using this function.");
+                    case 6:
+                        prompt(MainActivity.this, "Topic", "Topics:[" + Pushe.getSubscribedTopics().toString() + "]\nEnter topic name to subscribe or unsubscribe", "topic name", "Subscribe", "Unsubscribe", new Stuff.Callback<String>() {
+                            @Override
+                            public void onPositiveButtonClicked(String s) {
+                                Pushe.subscribeToTopic(s);
+                                addText(status, "Subscribe to topic: " + s);
+                                scroll.fullScroll(View.FOCUS_DOWN);
+                            }
 
+                            @Override
+                            public void onNegativeButtonClicked(String s) {
+                                Pushe.unsubscribeFromTopic(s);
+                                addText(status, "Unsubscribe from topic: " + s);
+                                scroll.fullScroll(View.FOCUS_DOWN);
+                            }
+                        });
+
+                        break;
+
+                    case 7:
+                        prompt(MainActivity.this, "Tags", "Tags:" + Pushe.getSubscribedTags().toString() + "\nTag in name:value format (add)\n Tag in name1,name2 format (remove)", "topic name", "Add", "Remove", new Stuff.Callback<String>() {
+                            @Override
+                            public void onPositiveButtonClicked(String s) {
+                                if (!s.contains(":")) return;
+                                String[] keyValue = s.split(":");
+                                if (keyValue.length != 2) return;
+                                Map map = new HashMap();
+                                map.put(keyValue[0], keyValue[1]);
+                                Pushe.addTags(map);
+                                addText(status, "Tag \'" + keyValue[0] + "\' added ");
+                                scroll.fullScroll(View.FOCUS_DOWN);
+                            }
+
+                            @Override
+                            public void onNegativeButtonClicked(String s) {
+                                String[] keyList = s.split(",");
+                                if (keyList.length == 0) return;
+                                Pushe.removeTags(Arrays.asList(keyList));
+                                addText(status, "Tags '" + s + "' removed");
+                                scroll.fullScroll(View.FOCUS_DOWN);
+                            }
+                        });
+
+                        break;
+
+                    case 8:
+                        prompt(MainActivity.this, "Event", "Type event name to send", new Consumer<String>() {
+                            @Override
+                            public void accept(String s) {
+                                Pushe.getPusheService(PusheAnalytics.class).sendEvent(s);
+                                addText(status, "Sending event: " + s);
+                                scroll.fullScroll(View.FOCUS_DOWN);
+
+                            }
+                        });
+
+                        break;
+
+                    case 9:
+                        prompt(MainActivity.this, "E-commerce", "Enter value in name:price format to send data", new Consumer<String>() {
+                            @Override
+                            public void accept(String s) {
+                                if (!s.contains(":")) return;
+                                String[] keyValue = s.split(":");
+                                if (keyValue.length != 2) return;
+                                try {
+                                    Pushe.getPusheService(PusheAnalytics.class).sendEcommerceData(keyValue[0], Double.parseDouble(keyValue[1]));
+                                    addText(status, "Sending E-commerce data with name "+keyValue[0]+" and price "+keyValue[1]);
+                                    scroll.fullScroll(View.FOCUS_DOWN);
+                                } catch (NumberFormatException e) {
+                                    addText(status, "Enter valid price (price should be double)");
+                                    scroll.fullScroll(View.FOCUS_DOWN);
+                                }
+                            }
+                        });
+
+                        break;
+                    case 10:
+                        prompt(MainActivity.this, "Notification", "Enter androidId to send a notification to that user", "androidId",  "Send to ...","Send to me", new Stuff.Callback<String>() {
+                            @Override
+                            public void onPositiveButtonClicked(String s) {
+                                UserNotification userNotification = UserNotification.withAndroidId(s);
+                                userNotification.setTitle("title1");
+                                userNotification.setContent("content1");
+                                Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification);
+                                addText(status, "Sending notification to AndroidId: " + s);
+                                scroll.fullScroll(View.FOCUS_DOWN);
+                            }
+
+                            @Override
+                            public void onNegativeButtonClicked(String s) {
+                                UserNotification userNotification = UserNotification.withAndroidId(Pushe.getAndroidId());
+                                userNotification.setTitle("title1");
+                                userNotification.setContent("content1");
+                                Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification);
+                                addText(status, "Sending notification to this device");
+                                scroll.fullScroll(View.FOCUS_DOWN);
+                            }
+                        });
+
+                        break;
+
+                    case 11:
+                        prompt(MainActivity.this, "Notification", "Enter GoogleAdId to send a notification to that user", "GoogleAdId", "Send to ...","Send to me", new Stuff.Callback<String>() {
+                            @Override
+                            public void onPositiveButtonClicked(String s) {
+                                UserNotification userNotification = UserNotification.withAdvertisementId(s);
+                                userNotification.setTitle("title1");
+                                userNotification.setContent("content1");
+                                Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification);
+                                addText(status, "Sending notification to GoogleAdId: " + s);
+                                scroll.fullScroll(View.FOCUS_DOWN);
+                            }
+
+                            @Override
+                            public void onNegativeButtonClicked(String s) {
+                                UserNotification userNotification = UserNotification.withAdvertisementId(Pushe.getGoogleAdvertisingId());
+                                userNotification.setTitle("title1");
+                                userNotification.setContent("content1");
+                                Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification);
+                                addText(status, "Sending notification to this device");
+                                scroll.fullScroll(View.FOCUS_DOWN);
+                            }
+                        });
+
+                        break;
+
+                    case 12:
+                        prompt(MainActivity.this, "Notification", "Enter custom id to send a notification to that user", "custom id", "Send to ...","Send to me", new Stuff.Callback<String>() {
+                            @Override
+                            public void onPositiveButtonClicked(String s) {
+                                UserNotification userNotification = UserNotification.withCustomId(s);
+                                userNotification.setTitle("title1");
+                                userNotification.setContent("content1");
+                                Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification);
+                                addText(status, "Sending notification to custom id: " + s);
+                                scroll.fullScroll(View.FOCUS_DOWN);
+                            }
+
+                            @Override
+                            public void onNegativeButtonClicked(String s) {
+                                UserNotification userNotification = UserNotification.withCustomId(Pushe.getCustomId());
+                                userNotification.setTitle("title1");
+                                userNotification.setContent("content1");
+                                Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification);
+                                addText(status, "Sending notification to this device");
+                                scroll.fullScroll(View.FOCUS_DOWN);
+                            }
+                        });
                 }
             }
         };
@@ -289,12 +389,11 @@ public class MainActivity extends AppCompatActivity {
     class Adapter extends RecyclerView.Adapter<Holder> {
 
         private List<String> dataSet;
-        private ItemClickListener listener, infoListener;
+        private ItemClickListener listener;
 
-        Adapter(List<String> dataSet, ItemClickListener listener, ItemClickListener infoListener) {
+        Adapter(List<String> dataSet, ItemClickListener listener) {
             this.dataSet = dataSet;
             this.listener = listener;
-            this.infoListener = infoListener;
         }
 
         @NonNull
@@ -313,12 +412,6 @@ public class MainActivity extends AppCompatActivity {
                     listener.onItemClick(view, position);
                 }
             });
-            holder.info.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    infoListener.onItemClick(view, position);
-                }
-            });
         }
 
         @Override
@@ -330,8 +423,8 @@ public class MainActivity extends AppCompatActivity {
     // List view holder
     class Holder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.text) TextView action;
-        @BindView(R.id.info) ImageView info;
+        @BindView(R.id.text)
+        TextView action;
 
         Holder(@NonNull View itemView) {
             super(itemView);
