@@ -24,10 +24,13 @@ The manifest content will be a tag like this:
 
 ```xml
 <meta-data android:name="pushe_token"
-            android:value="Y28ucm9uYXNoLnB1c2hlc2FtcGxlLmFzQHhpZkAxNTQ4OTc4MTg2Mjk=" />
+            android:value="PUSHE_TOKEN" />
 ```
-
-The value `Y28ucm9uYXNoLnB1c2hlc2FtcGxlLmFzQHhpZkAxNTQ4OTc4MTg2Mjk=` is for demo panel. Replace it with your own token.
+In order to run this application follow bellow steps:
+1. Signup to [Pushe Console](https://console.pushe.co)
+2. Create application
+3. Copy `PUSHE_TOKEN` in the manifest step
+4. Replace your token with `PUSHE_TOKEN` in above `meta-data` tag
 
 And if you need location-based features, add `Location permissions` to the manifest as well.
 
