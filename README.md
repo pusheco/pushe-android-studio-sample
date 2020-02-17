@@ -18,7 +18,10 @@ dependencies {
 ```
 #### AndroidManifest.xml
 
-Go to [Pushe console](https://console.pushe.co) and get the manifest content and add it to your project `AndroidManifest.xml`
+In order to run this application follow bellow steps:
+1. Signup to [Pushe Console](https://console.pushe.co)
+2. Create application
+3. Get the manifest content and add it to your project `AndroidManifest.xml`
 
 The manifest content will be a tag like this:
 
@@ -26,13 +29,7 @@ The manifest content will be a tag like this:
 <meta-data android:name="pushe_token"
             android:value="PUSHE_TOKEN" />
 ```
-In order to run this application follow bellow steps:
-1. Signup to [Pushe Console](https://console.pushe.co)
-2. Create application
-3. Copy `PUSHE_TOKEN` in the manifest step
-4. Replace your token with `PUSHE_TOKEN` in above `meta-data` tag
-
-And if you need location-based features, add `Location permissions` to the manifest as well.
+If you need location-based features, add `Location permissions` to the manifest as well.
 
 
 #### More features
