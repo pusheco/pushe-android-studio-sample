@@ -10,12 +10,30 @@ Simple implementation of [Pushe](http://pushe.co) SDK using Android studio and J
 * Open it with Android studio and run it on your device.
 
 #### Installation on your project
+
+**Stable**:
+
 ```groovy
 dependencies {
-   implementation 'co.pushe.plus:base:2.0.4' // Or compile for lower gradles
+   implementation 'co.pushe.plus:base:2.0.5' // Or compile for lower gradles
 }
-
 ```
+
+**Latest features**:
+
+```groovy
+allprojects {
+    repositories {
+        maven { url 'https://dl.bintray.com/pushe/preview' }
+        // ...
+    }
+}
+```
+
+```groovy
+implementation "co.pushe.plus:base:2.1.0-beta05"
+```
+
 #### AndroidManifest.xml
 
 In order to run this application follow bellow steps:
