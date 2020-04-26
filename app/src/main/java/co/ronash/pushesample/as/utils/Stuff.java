@@ -2,8 +2,8 @@ package co.ronash.pushesample.as.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v4.util.Consumer;
-import android.support.v7.app.AlertDialog;
+import androidx.core.util.Consumer;
+import androidx.appcompat.app.AlertDialog;
 import android.widget.EditText;
 import android.widget.TextView;
 

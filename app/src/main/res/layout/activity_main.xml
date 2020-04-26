@@ -8,7 +8,7 @@
     tools:context=".activities.MainActivity">
 
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:background="@color/blue"
         app:titleTextColor="@color/white"
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:padding="2dp"
         android:id="@+id/list"
         android:layout_width="match_parent"
