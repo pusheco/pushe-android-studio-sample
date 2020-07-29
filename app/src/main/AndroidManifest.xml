@@ -11,6 +11,7 @@
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
@@ -36,7 +37,7 @@
         <!-- Credential belongs to Pushe demo console. check `pushe.co` -->
         <meta-data
             android:name="pushe_token"
-            android:value="Y28ucm9uYXNoLnB1c2hlc2FtcGxlLmFzQHhpZkAxNTQ4OTc4MTg2Mjk=" />
+            android:value="cWQyM2p3eXJ3NzZsdm81ZUBlaXpAMTM0NTExMDA3MTA5" />
 
         <!-- Custom firebase service for Pushe -->
 

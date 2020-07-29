@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,6 +30,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.pushe.plus.Pushe;
 import co.pushe.plus.analytics.PusheAnalytics;
+import co.pushe.plus.inappmessaging.InAppMessage;
+import co.pushe.plus.inappmessaging.PusheInAppMessaging;
+import co.pushe.plus.inappmessaging.PusheInAppMessagingListener;
 import co.pushe.plus.notification.NotificationButtonData;
 import co.pushe.plus.notification.NotificationData;
 import co.pushe.plus.notification.PusheNotification;
@@ -50,6 +54,8 @@ import static co.ronash.pushesample.as.utils.Stuff.prompt;
 @SuppressLint("SetTextI18n")
 public class MainActivity extends AppCompatActivity {
 
+    private PusheInAppMessaging inAppMessaging;
+
     @BindView(R.id.status)
     TextView status;
     @BindView(R.id.list)
@@ -66,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        inAppMessaging = Pushe.getPusheService(PusheInAppMessaging.class);
 
         try {
             toolbar.setSubtitle("v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName );
@@ -93,37 +100,62 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Pushe.getPusheService(PusheNotification.class).setNotificationListener(new PusheNotificationListener() {
-            @Override
-            public void onNotification(@NonNull NotificationData notification) {
-                addText(status, "Listener on receiving notification triggered");
-                scroll.fullScroll(View.FOCUS_DOWN);
-            }
+        // Notification listener
+        PusheNotification pnotif = Pushe.getPusheService(PusheNotification.class);
+        if (pnotif != null) {
+            Pushe.getPusheService(PusheNotification.class).setNotificationListener(new PusheNotificationListener() {
+                @Override
+                public void onNotification(@NonNull NotificationData notification) {
+                    addText(scroll, status, "Listener on receiving notification triggered\n" + notification.title);
+                }
 
-            @Override
-            public void onCustomContentNotification(@NonNull Map<String, Object> customContent) {
-                addText(status, "Listener on receiving notification with custom content triggered");
-                scroll.fullScroll(View.FOCUS_DOWN);
-            }
+                @Override
+                public void onCustomContentNotification(@NonNull Map<String, Object> customContent) {
+                    addText(scroll, status, "Listener on receiving notification with custom content triggered");
+                }
 
-            @Override
-            public void onNotificationClick(@NonNull NotificationData notification) {
-                addText(status, "Listener on clicking on notification triggered");
-                scroll.fullScroll(View.FOCUS_DOWN);
-            }
+                @Override
+                public void onNotificationClick(@NonNull NotificationData notification) {
+                    addText(scroll, status, "Listener on clicking on notification triggered");
+                }
 
-            @Override
-            public void onNotificationDismiss(@NonNull NotificationData notification) {
-                addText(status, "Listener on dismissing notification triggered");
-                scroll.fullScroll(View.FOCUS_DOWN);
-            }
+                @Override
+                public void onNotificationDismiss(@NonNull NotificationData notification) {
+                    addText(scroll, status, "Listener on dismissing notification triggered");
+                }
 
-            @Override
-            public void onNotificationButtonClick(@NonNull NotificationButtonData button, @NonNull NotificationData notification) {
-                addText(status, "Listener on clicking on notification button triggered");
-                scroll.fullScroll(View.FOCUS_DOWN);
-            }
-        });
+                @Override
+                public void onNotificationButtonClick(@NonNull NotificationButtonData button, @NonNull NotificationData notification) {
+                    addText(scroll, status, "Listener on clicking on notification button triggered");
+                }
+            });
+        }
+        // Piam listener
+        PusheInAppMessaging piam = Pushe.getPusheService(PusheInAppMessaging.class);
+        if (piam != null) {
+            piam.setInAppMessagingListener(new PusheInAppMessagingListener() {
+                @Override
+                public void onInAppMessageReceived(@NonNull InAppMessage inAppMessage) {
+                    addText(scroll, status, "InAppMessage received:\nTitle: " + inAppMessage.getTitle() + "\nContent: " + inAppMessage.getContent());
+                }
+
+                @Override
+                public void onInAppMessageTriggered(@NonNull InAppMessage inAppMessage) {
+                }
+
+                @Override
+                public void onInAppMessageClicked(@NonNull InAppMessage inAppMessage) {
+                }
+
+                @Override
+                public void onInAppMessageDismissed(@NonNull InAppMessage inAppMessage) {
+                }
+
+                @Override
+                public void onInAppMessageButtonClicked(@NonNull InAppMessage inAppMessage, int piamButtonIndex) {
+                }
+            });
+        }
     }
 
     /**
@@ -147,7 +179,9 @@ public class MainActivity extends AppCompatActivity {
                         "Analytics: E-commerce",
                         "Notification: AndroidId",
                         "Notification: GoogleAdId",
-                        "Notification: CustomId"
+                        "Notification: CustomId",
+                        "Piam: Dismiss All InApps",
+                        "Piam: Trigger event"
                 ),
                 handleItemClick()));
     }
@@ -170,8 +204,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void accept(String s) {
                                 Pushe.setCustomId(s);
-                                addText(status, "Custom id is: " + Pushe.getCustomId());
-                                scroll.fullScroll(View.FOCUS_DOWN);
+                                addText(scroll, status, "Custom id is: " + Pushe.getCustomId());
                             }
                         });
 
@@ -181,8 +214,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void accept(String s) {
                                 Pushe.setUserPhoneNumber(s);
-                                addText(status, "phone number is: " + Pushe.getUserPhoneNumber());
-                                scroll.fullScroll(View.FOCUS_DOWN);
+                                addText(scroll, status, "phone number is: " + Pushe.getUserPhoneNumber());
                             }
                         });
                         break;
@@ -191,19 +223,16 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void accept(String s) {
                                 Pushe.setUserEmail(s);
-                                addText(status, "user email is: " + Pushe.getUserEmail());
-                                scroll.fullScroll(View.FOCUS_DOWN);
+                                addText(scroll, status, "user email is: " + Pushe.getUserEmail());
                             }
                         });
 
                         break;
                     case 4:
-                        addText(status, "modules initialized: " + Pushe.isInitialized());
-                        scroll.fullScroll(View.FOCUS_DOWN);
+                        addText(scroll, status, "modules initialized: " + Pushe.isInitialized());
                         break;
                     case 5:
-                        addText(status, "Device registered: " + Pushe.isRegistered());
-                        scroll.fullScroll(View.FOCUS_DOWN);
+                        addText(scroll, status, "Device registered: " + Pushe.isRegistered());
                         break;
 
                     case 6:
@@ -211,15 +240,13 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onPositiveButtonClicked(String s) {
                                 Pushe.subscribeToTopic(s);
-                                addText(status, "Subscribe to topic: " + s);
-                                scroll.fullScroll(View.FOCUS_DOWN);
+                                addText(scroll, status, "Subscribe to topic: " + s);
                             }
 
                             @Override
                             public void onNegativeButtonClicked(String s) {
                                 Pushe.unsubscribeFromTopic(s);
-                                addText(status, "Unsubscribe from topic: " + s);
-                                scroll.fullScroll(View.FOCUS_DOWN);
+                                addText(scroll, status, "Unsubscribe from topic: " + s);
                             }
                         });
 
@@ -235,8 +262,7 @@ public class MainActivity extends AppCompatActivity {
                                 Map map = new HashMap();
                                 map.put(keyValue[0], keyValue[1]);
                                 Pushe.addTags(map);
-                                addText(status, "Tag \'" + keyValue[0] + "\' added ");
-                                scroll.fullScroll(View.FOCUS_DOWN);
+                                addText(scroll, status, "Tag \'" + keyValue[0] + "\' added ");
                             }
 
                             @Override
@@ -244,8 +270,7 @@ public class MainActivity extends AppCompatActivity {
                                 String[] keyList = s.split(",");
                                 if (keyList.length == 0) return;
                                 Pushe.removeTags(Arrays.asList(keyList));
-                                addText(status, "Tags '" + s + "' removed");
-                                scroll.fullScroll(View.FOCUS_DOWN);
+                                addText(scroll, status, "Tags '" + s + "' removed");
                             }
                         });
 
@@ -256,8 +281,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void accept(String s) {
                                 Pushe.getPusheService(PusheAnalytics.class).sendEvent(s);
-                                addText(status, "Sending event: " + s);
-                                scroll.fullScroll(View.FOCUS_DOWN);
+                                addText(scroll, status, "Sending event: " + s);
 
                             }
                         });
@@ -273,11 +297,9 @@ public class MainActivity extends AppCompatActivity {
                                 if (keyValue.length != 2) return;
                                 try {
                                     Pushe.getPusheService(PusheAnalytics.class).sendEcommerceData(keyValue[0], Double.parseDouble(keyValue[1]));
-                                    addText(status, "Sending E-commerce data with name "+keyValue[0]+" and price "+keyValue[1]);
-                                    scroll.fullScroll(View.FOCUS_DOWN);
+                                    addText(scroll, status, "Sending E-commerce data with name "+keyValue[0]+" and price "+keyValue[1]);
                                 } catch (NumberFormatException e) {
-                                    addText(status, "Enter valid price (price should be double)");
-                                    scroll.fullScroll(View.FOCUS_DOWN);
+                                    addText(scroll, status, "Enter valid price (price should be double)");
                                 }
                             }
                         });
@@ -291,8 +313,7 @@ public class MainActivity extends AppCompatActivity {
                                 userNotification.setTitle("title1");
                                 userNotification.setContent("content1");
                                 Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification);
-                                addText(status, "Sending notification to AndroidId: " + s);
-                                scroll.fullScroll(View.FOCUS_DOWN);
+                                addText(scroll, status, "Sending notification to AndroidId: " + s);
                             }
 
                             @Override
@@ -301,8 +322,7 @@ public class MainActivity extends AppCompatActivity {
                                 userNotification.setTitle("title1");
                                 userNotification.setContent("content1");
                                 Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification);
-                                addText(status, "Sending notification to this device");
-                                scroll.fullScroll(View.FOCUS_DOWN);
+                                addText(scroll, status, "Sending notification to this device");
                             }
                         });
 
@@ -316,8 +336,7 @@ public class MainActivity extends AppCompatActivity {
                                 userNotification.setTitle("title1");
                                 userNotification.setContent("content1");
                                 Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification);
-                                addText(status, "Sending notification to GoogleAdId: " + s);
-                                scroll.fullScroll(View.FOCUS_DOWN);
+                                addText(scroll, status, "Sending notification to GoogleAdId: " + s);
                             }
 
                             @Override
@@ -326,8 +345,7 @@ public class MainActivity extends AppCompatActivity {
                                 userNotification.setTitle("title1");
                                 userNotification.setContent("content1");
                                 Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification);
-                                addText(status, "Sending notification to this device");
-                                scroll.fullScroll(View.FOCUS_DOWN);
+                                addText(scroll, status, "Sending notification to this device");
                             }
                         });
 
@@ -341,8 +359,7 @@ public class MainActivity extends AppCompatActivity {
                                 userNotification.setTitle("title1");
                                 userNotification.setContent("content1");
                                 Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification);
-                                addText(status, "Sending notification to custom id: " + s);
-                                scroll.fullScroll(View.FOCUS_DOWN);
+                                addText(scroll, status, "Sending notification to custom id: " + s);
                             }
 
                             @Override
@@ -351,10 +368,28 @@ public class MainActivity extends AppCompatActivity {
                                 userNotification.setTitle("title1");
                                 userNotification.setContent("content1");
                                 Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification);
-                                addText(status, "Sending notification to this device");
-                                scroll.fullScroll(View.FOCUS_DOWN);
+                                addText(scroll, status, "Sending notification to this device");
                             }
                         });
+                        break;
+                    case 13: // InApp Dismiss all
+                        if (inAppMessaging == null) return;
+                        inAppMessaging.dismissShownInApp();
+                        break;
+                    case 14: // Trigger an event
+                        if (inAppMessaging == null) return;
+                        prompt(MainActivity.this, "InAppMessaging", "Enter an event", "", new Consumer<String>() {
+                            @Override
+                            public void accept(String s) {
+                                if (s.isEmpty() || Stuff.listOf("%", "&", "@").contains(s) || s.length() > 10) {
+                                    Toast.makeText(MainActivity.this, "Invalid event name", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    addText(scroll, status, "Triggering event: " + s);
+                                    inAppMessaging.triggerEvent(s);
+                                }
+                            }
+                        });
+                        break;
                 }
             }
         };
@@ -363,8 +398,7 @@ public class MainActivity extends AppCompatActivity {
     // region EventBus
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        addText(status, event.getMessage());
-        scroll.fullScroll(View.FOCUS_DOWN);
+        addText(scroll, status, event.getMessage());
     }
 
     @Override

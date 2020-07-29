@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "28.0.3"
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
 
@@ -10,10 +10,10 @@ android {
         applicationId "co.ronash.pushesample.as"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 13
+        versionCode 15
         multiDexEnabled true
 
-        versionName "2.1.0"
+        versionName pusheVersion
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -35,7 +35,6 @@ dependencies {
     implementation 'androidx.media:media:1.1.0'
 
     // ButterKnife: To easily connect XML to code
-    //noinspection GradleDependency -- Highers use androidX
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
@@ -43,8 +42,8 @@ dependencies {
     // Event bus: To send event through application from anywhere to anywhere
     implementation 'org.greenrobot:eventbus:3.1.1'
 
-    implementation 'co.pushe.plus:base:2.1.0'
+    implementation "co.pushe.plus:base:$pusheVersion"
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.firebase:firebase-messaging:20.1.5'
+    implementation 'com.google.firebase:firebase-messaging:20.2.3'
 }

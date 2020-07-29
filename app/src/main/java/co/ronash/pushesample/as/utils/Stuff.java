@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import androidx.core.util.Consumer;
 import androidx.appcompat.app.AlertDialog;
+
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -47,7 +50,7 @@ public class Stuff {
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        callback.accept(null);
+                        //
                     }
                 }).create().show();
     }
@@ -107,7 +110,7 @@ public class Stuff {
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        callback.accept(null);
+                        //
                     }
                 }).create().show();
     }
@@ -138,6 +141,22 @@ public class Stuff {
 
 
         textView.setText(newText);
+    }
+
+    /**
+     * Add text instead of replacing the text in android studio.
+     * Takes a textView and a text and adds the text to the textView.
+     */
+    public static void addText(ScrollView scrollView, TextView textView, String text) {
+        if (textView == null) return;
+        String currentText = (String) textView.getText();
+        if (currentText == null) currentText = "";
+        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+        String newText = currentText + "\n-----\n"  + text + "\nTime: " + currentDateTimeString + "\n";
+
+
+        textView.setText(newText);
+        scrollView.fullScroll(View.FOCUS_DOWN);
     }
 
     public interface Callback<T>

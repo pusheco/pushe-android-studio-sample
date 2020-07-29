@@ -2,6 +2,8 @@ package co.ronash.pushesample.as.services;
 
 
 
+import android.util.Log;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -12,6 +14,7 @@ public class MyFcmService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+        Log.d("P_AS", "Message received: \n" + remoteMessage.getData());
         if (Pushe.getFcmHandler().onMessageReceived(remoteMessage)) {
             // Message is for Pushe
             return;
