@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             Pushe.getPusheService(PusheNotification.class).setNotificationListener(new PusheNotificationListener() {
                 @Override
                 public void onNotification(@NonNull NotificationData notification) {
-                    addText(scroll, status, "Listener on receiving notification triggered\n" + notification.title);
+                    addText(scroll, status, "Listener on receiving notification triggered\n" + notification.getTitle());
                 }
 
                 @Override

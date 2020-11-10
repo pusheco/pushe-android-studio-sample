@@ -7,34 +7,23 @@ buildscript {
          * Refer to Pushe release note for more information about versions
          * https://docs.pushe.co/docs/android-studio/releasenote
          */
-        pusheVersion = '2.2.0-beta05'
+        pusheVersion = '2.4.0'
     }
 
     repositories {
-        /**
-         *  This repo is needed for Pushe to be downloaded.
-         * If you use a lower gradle version (Here it's 3.4.2), you might see this error:
-         * Dsl method `google()` not found, instead you must use this:
-         */
-        maven { url 'https://maven.google.com' }
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.android.tools.build:gradle:4.1.0'
     }
 }
 
 allprojects {
     repositories {
-        mavenLocal()
-        maven { url 'https://dl.bintray.com/pushe/preview' }
-        // This repo is needed for Pushe to be downloaded.
-        // If you use a lower gradle version (Here it's 3.4.2), you might see this error:
-        // Dsl method `google()` not found, instead you must use this:
-        // maven { url 'https://maven.google.com' }
-        google()
         jcenter()
+        google()
+        maven {url 'https://developer.huawei.com/repo/'}
     }
 }
 

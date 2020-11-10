@@ -1,3 +1,39 @@
+# Change log
+
+## 2.4.0
+- **NEW**: Added support for Huawei Mobile services push notification service.
+  Huawei devices and other devices that have HMS core will now be supported by pushe
+- Support for Huawei OAID as a replacement for Google Ad id
+- Update `firebase-messaging` dependency to `21.0.0`
+- Added support for default firebase. In order to fix `FIS_AUTH` happened for any reason, manifest flag `use_default_firebase` can be used
+
+**NOTE**: You need `huawei` maven repo to sync `hms` module of pushe:
+
+```java
+allprojects {
+    repositories {
+        maven {url 'https://developer.huawei.com/repo/'}
+        jcenter()
+    }
+}
+```
+
+```xml
+<meta-data android:name="pushe_use_default_firebase" android:value="true" />
+```
+
+
+## 2.2.1
+- Fix: Error `addObserver must be called on mainThread`
+
+## 2.2.0
+- Add support for **InAppMessaging**. [More Info](https://docs.pushe.co/docs/android/inappmessaging/intro/)
+
+## 2.1.1
+- **GDPR** compliancy support
+- `getAndroidId()` is deprecated. Use `getDeviceId()` instead.
+- Remove `getPusheId()`. Use [other IDs specified](https://docs.pushe.co/docs/android/unification)
+
 ## 2.1.0 (18 Apr, 2020)
 **Breaking change**
 

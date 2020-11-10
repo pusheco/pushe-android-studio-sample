@@ -8,14 +8,18 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import co.pushe.plus.Pushe;
+import co.pushe.plus.fcm.FcmHandler;
+import co.pushe.plus.fcm.PusheFCM;
 
 
 public class MyFcmService extends FirebaseMessagingService {
 
+    private FcmHandler fcmHandler = Pushe.getPusheService(PusheFCM.class).getFcmHandler();
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.d("P_AS", "Message received: \n" + remoteMessage.getData());
-        if (Pushe.getFcmHandler().onMessageReceived(remoteMessage)) {
+        if (fcmHandler.onMessageReceived(remoteMessage)) {
             // Message is for Pushe
             return;
         }
@@ -26,7 +30,7 @@ public class MyFcmService extends FirebaseMessagingService {
 
     @Override
     public void onNewToken(String s) {
-        Pushe.getFcmHandler().onNewToken(s);
+        fcmHandler.onNewToken(s);
         super.onNewToken(s);
 
         // Token is refreshed
@@ -34,7 +38,7 @@ public class MyFcmService extends FirebaseMessagingService {
 
     @Override
     public void onMessageSent(String s) {
-        Pushe.getFcmHandler().onMessageSent(s);
+        fcmHandler.onMessageSent(s);
         super.onMessageSent(s);
 
         // Message sent
@@ -42,7 +46,7 @@ public class MyFcmService extends FirebaseMessagingService {
 
     @Override
     public void onDeletedMessages() {
-        Pushe.getFcmHandler().onDeletedMessages();
+        fcmHandler.onDeletedMessages();
         super.onDeletedMessages();
 
         // Message was deleted
@@ -50,7 +54,7 @@ public class MyFcmService extends FirebaseMessagingService {
 
     @Override
     public void onSendError(String s, Exception e) {
-        Pushe.getFcmHandler().onSendError(s, e);
+        fcmHandler.onSendError(s, e);
         super.onSendError(s, e);
 
         // Error sent
