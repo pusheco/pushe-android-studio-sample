@@ -11,27 +11,21 @@ Simple implementation of [Pushe](http://pushe.co) SDK using Android studio and J
 
 #### Installation on your project
 
-**Stable**:
 
 ```groovy
 dependencies {
-   implementation 'co.pushe.plus:base:2.0.5' // Or compile for lower gradles
+   implementation 'co.pushe.plus:base:2.4.0'
 }
 ```
-
-**Latest features**:
 
 ```groovy
 allprojects {
     repositories {
-        maven { url 'https://dl.bintray.com/pushe/preview' }
+        maven { url 'https://developer.huawei.com/repo/' }
+        jcenter()
         // ...
     }
 }
-```
-
-```groovy
-implementation "co.pushe.plus:base:2.1.0-beta05"
 ```
 
 #### AndroidManifest.xml
@@ -58,7 +52,7 @@ Now run and install your app on a device or emulator that has google-play-servic
 Pushe needs minimum android api=15 and google-play-service version >= 3 to run.
 
 ## More Info
-For detailed documentations visit https://pushe.co/docs/android-studio/
+For detailed documentations visit https://docs.pushe.co/docs/android/intro
 
 
 ## Contribution
@@ -69,6 +63,6 @@ It does not follow any specific code style. So just read the code a little bit a
 ## Support 
 #### Email:
 If you have any problem, please contact us using this email, we will get back to you right away:
-`support [at] pushe.co`
+`hi [at] pushe.co`
 
 
