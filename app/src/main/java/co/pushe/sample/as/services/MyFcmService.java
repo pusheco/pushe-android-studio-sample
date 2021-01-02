@@ -1,4 +1,4 @@
-package co.ronash.pushesample.as.services;
+package co.pushe.sample.as.services;
 
 
 
@@ -14,12 +14,13 @@ import co.pushe.plus.fcm.PusheFCM;
 
 public class MyFcmService extends FirebaseMessagingService {
 
-    private FcmHandler fcmHandler = Pushe.getPusheService(PusheFCM.class).getFcmHandler();
+    private final FcmHandler fcmHandler = Pushe.getPusheService(PusheFCM.class).getFcmHandler();
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+
         Log.d("P_AS", "Message received: \n" + remoteMessage.getData());
-        if (fcmHandler.onMessageReceived(remoteMessage)) {
+        if (fcmHandler != null && fcmHandler.onMessageReceived(remoteMessage)) {
             // Message is for Pushe
             return;
         }
@@ -30,7 +31,9 @@ public class MyFcmService extends FirebaseMessagingService {
 
     @Override
     public void onNewToken(String s) {
-        fcmHandler.onNewToken(s);
+        if (fcmHandler != null) {
+            fcmHandler.onNewToken(s);
+        }
         super.onNewToken(s);
 
         // Token is refreshed
@@ -38,7 +41,9 @@ public class MyFcmService extends FirebaseMessagingService {
 
     @Override
     public void onMessageSent(String s) {
-        fcmHandler.onMessageSent(s);
+        if (fcmHandler != null) {
+            fcmHandler.onMessageSent(s);
+        }
         super.onMessageSent(s);
 
         // Message sent
@@ -46,7 +51,9 @@ public class MyFcmService extends FirebaseMessagingService {
 
     @Override
     public void onDeletedMessages() {
-        fcmHandler.onDeletedMessages();
+        if (fcmHandler != null) {
+            fcmHandler.onDeletedMessages();
+        }
         super.onDeletedMessages();
 
         // Message was deleted
@@ -54,7 +61,9 @@ public class MyFcmService extends FirebaseMessagingService {
 
     @Override
     public void onSendError(String s, Exception e) {
-        fcmHandler.onSendError(s, e);
+        if (fcmHandler != null) {
+            fcmHandler.onSendError(s, e);
+        }
         super.onSendError(s, e);
 
         // Error sent

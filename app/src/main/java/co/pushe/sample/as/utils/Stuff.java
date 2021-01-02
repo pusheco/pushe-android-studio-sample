@@ -1,4 +1,4 @@
-package co.ronash.pushesample.as.utils;
+package co.pushe.sample.as.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;

@@ -1,4 +1,4 @@
-package co.ronash.pushesample.as.eventbus;
+package co.pushe.sample.as.eventbus;
 
 
 /**
@@ -7,7 +7,7 @@ package co.ronash.pushesample.as.eventbus;
  */
 public class MessageEvent {
 
-    private String message;
+    private final String message;
 
     public String getMessage() {
         return message;

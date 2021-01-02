@@ -14,7 +14,9 @@ Simple implementation of [Pushe](http://pushe.co) SDK using Android studio and J
 
 ```groovy
 dependencies {
-   implementation 'co.pushe.plus:base:2.4.0'
+   implementation 'co.pushe.plus:base:2.4.1' // Core module + essential
+   implementation 'co.pushe.plus:hms:2.4.1' // Huawei PushKit support
+   implementation 'co.pushe.plus:inappmessaging:2.4.1' // InAppMessaging
 }
 ```
 

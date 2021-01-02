@@ -1,4 +1,4 @@
-package co.ronash.pushesample.as.activities;
+package co.pushe.sample.as.activities;
 
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
@@ -38,20 +38,21 @@ import co.pushe.plus.notification.NotificationData;
 import co.pushe.plus.notification.PusheNotification;
 import co.pushe.plus.notification.PusheNotificationListener;
 import co.pushe.plus.notification.UserNotification;
-import co.ronash.pushesample.as.R;
-import co.ronash.pushesample.as.eventbus.MessageEvent;
-import co.ronash.pushesample.as.utils.Stuff;
+import co.pushe.sample.as.R;
+import co.pushe.sample.as.eventbus.MessageEvent;
+import co.pushe.sample.as.utils.Stuff;
 
-import static co.ronash.pushesample.as.utils.Stuff.addText;
-import static co.ronash.pushesample.as.utils.Stuff.alert;
-import static co.ronash.pushesample.as.utils.Stuff.prompt;
+import static co.pushe.sample.as.utils.Stuff.addText;
+import static co.pushe.sample.as.utils.Stuff.alert;
+import static co.pushe.sample.as.utils.Stuff.prompt;
 
 /**
  * For further information Go to <a href="https://pushe.co/docs">Docs</a>
  *
  * @author Mahdi Malvandi
  */
-@SuppressLint("SetTextI18n")
+@SuppressWarnings({"rawtypes", "unchecked", "unused", "RedundantSuppression"})
+@SuppressLint("SetTextI18n,NonConstantResourceId")
 public class MainActivity extends AppCompatActivity {
 
     private PusheInAppMessaging inAppMessaging;
@@ -197,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(View v, int position) {
                 switch (position) {
                     case 0:
-                        alert(MainActivity.this, "IDs", "AndroidId:\n" + Pushe.getAndroidId() + "\nGoogleAdId:\n" + Pushe.getGoogleAdvertisingId());
+                        alert(MainActivity.this, "IDs", "AndroidId:\n" + Pushe.getDeviceId() + "\nGoogleAdId:\n" + Pushe.getAdvertisingId());
                         break;
                     case 1:
                         prompt(MainActivity.this, "New custom id", "current custom id:" + Pushe.getCustomId(), new Consumer<String>() {
@@ -262,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
                                 Map map = new HashMap();
                                 map.put(keyValue[0], keyValue[1]);
                                 Pushe.addTags(map);
-                                addText(scroll, status, "Tag \'" + keyValue[0] + "\' added ");
+                                addText(scroll, status, "Tag '" + keyValue[0] + "' added ");
                             }
 
                             @Override
@@ -318,7 +319,7 @@ public class MainActivity extends AppCompatActivity {
 
                             @Override
                             public void onNegativeButtonClicked(String s) {
-                                UserNotification userNotification = UserNotification.withAndroidId(Pushe.getAndroidId());
+                                UserNotification userNotification = UserNotification.withAndroidId(Pushe.getDeviceId());
                                 userNotification.setTitle("title1");
                                 userNotification.setContent("content1");
                                 Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification);
@@ -341,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
 
                             @Override
                             public void onNegativeButtonClicked(String s) {
-                                UserNotification userNotification = UserNotification.withAdvertisementId(Pushe.getGoogleAdvertisingId());
+                                UserNotification userNotification = UserNotification.withAdvertisementId(Pushe.getAdvertisingId());
                                 userNotification.setTitle("title1");
                                 userNotification.setContent("content1");
                                 Pushe.getPusheService(PusheNotification.class).sendNotificationToUser(userNotification);
@@ -417,10 +418,10 @@ public class MainActivity extends AppCompatActivity {
     // region List
 
     // List adapter
-    class Adapter extends RecyclerView.Adapter<Holder> {
+    static class Adapter extends RecyclerView.Adapter<Holder> {
 
-        private List<String> dataSet;
-        private ItemClickListener listener;
+        private final List<String> dataSet;
+        private final ItemClickListener listener;
 
         Adapter(List<String> dataSet, ItemClickListener listener) {
             this.dataSet = dataSet;
@@ -452,7 +453,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // List view holder
-    class Holder extends RecyclerView.ViewHolder {
+    static class Holder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.text)
         TextView action;

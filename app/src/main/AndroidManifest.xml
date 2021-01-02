@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="co.ronash.pushesample.as">
+    package="co.pushe.sample.as">
 
-    <uses-permission android:name="co.ronash.pushesample.as.permission.C2D_MESSAGE" />
+    <uses-permission android:name="co.pushe.sample.as.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
@@ -24,28 +24,23 @@
             </intent-filter>
         </activity>
 
-<!--        &lt;!&ndash; Notification click/dismiss receiver &ndash;&gt;-->
-<!--        <receiver android:name=".receiver.NotificationClickDismissReceiver">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="co.ronash.pushesample.as.pusheco.NOTIF_CLICKED"/>-->
-<!--                <action android:name="co.ronash.pushesample.as.pusheco.NOTIF_DISMISSED" />-->
-<!--                <action android:name="co.ronash.pushesample.as.pusheco.NOTIF_BTN_CLICKED" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
-
-
         <!-- Credential belongs to Pushe demo console. check `pushe.co` -->
         <meta-data
             android:name="pushe_token"
-            android:value="cWQyM2p3eXJ3NzZsdm81ZUBlaXpAMTM0NTExMDA3MTA5" />
+            android:value="MmV5bTN6b3ZtMmtwODcxZUBxcW1AMjY1ODgxNzI4NTQ3" />
+
+        <meta-data
+            android:name="pushe_log_level"
+            android:value="debug" />
 
         <!-- Custom firebase service for Pushe -->
 
         <service
-            android:name="co.pushe.plus.messaging.fcm.FcmService"
+            android:name="co.pushe.plus.fcm.FcmService"
             tools:node="remove" />
 
-        <service android:name=".services.MyFcmService">
+        <service android:name=".services.MyFcmService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

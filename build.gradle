@@ -7,7 +7,7 @@ buildscript {
          * Refer to Pushe release note for more information about versions
          * https://docs.pushe.co/docs/android-studio/releasenote
          */
-        pusheVersion = '2.4.0'
+        pusheVersion = '2.4.1'
     }
 
     repositories {
@@ -15,7 +15,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:4.1.1'
     }
 }
 

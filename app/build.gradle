@@ -2,16 +2,15 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
 
         // This is the application id (which must be the package name you add into panel of Pushe)
-        applicationId "co.ronash.pushesample.as"
+        applicationId "co.pushe.sample.as"
         minSdkVersion 17
         targetSdkVersion 30
-        versionCode 16 // Mmp
-        versionName '0.1.6'
+        versionCode 17
         multiDexEnabled true
 
         versionName pusheVersion
@@ -33,7 +32,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.media:media:1.2.0'
+    implementation 'androidx.media:media:1.2.1'
 
     // ButterKnife: To easily connect XML to code
     implementation 'com.jakewharton:butterknife:10.1.0'
@@ -41,10 +40,12 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
     // Event bus: To send event through application from anywhere to anywhere
-    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'org.greenrobot:eventbus:3.2.0'
 
     implementation "co.pushe.plus:base:$pusheVersion"
+    implementation "co.pushe.plus:hms:$pusheVersion"
+    implementation "co.pushe.plus:inappmessaging:$pusheVersion"
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.firebase:firebase-messaging:21.0.0'
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
 }
