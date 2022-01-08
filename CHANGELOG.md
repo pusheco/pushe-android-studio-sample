@@ -1,5 +1,37 @@
 # Change log
 
+## 2.5.1-rc02
+- Add `AD_ID` permission to ensure `Pushe.getAdvertisinfId` works for Google since the change in [AdvertisingId policy](https://support.google.com/googleplay/android-developer/answer/6048248?hl=en)
+- Fix warning for `missing class co.pushe.plus.messaging.ParcelSendException` when minifying.
+
+## 2.5.1-rc01
+- Fix `android:exported` not present in some `<service>` tags (targetSDK=31 only)
+- Updated targetSDKVersion to **31**
+
+## 2.5.0
+- **New**: Location APIs are now provided by `fcm` and `hms` independently. Geofence and Location-based notifications are supported both in Huawei and Google devices.
+- **New**: Ability to disable display of notification when app is in Foreground state. 
+  You can just pass `show_foreground: false` when sending using RESTful API (Console not supported yet).  
+  Or Use one of provided APIs:
+
+  ```java
+    PusheNotification notification = Pushe.getPusheService(PusheNotification.class);
+    if(notification != null) {
+        // فعال‌کردن این قابلیت برای همه‌ی اعلانها
+        notification.enableNotificationForceForegroundAware();
+    
+        // حالت پیش‌فرض
+        notification.disableNotificationForceForegroundAware();
+    
+        // بررسی فعال‌بودن یا نبودن  
+        notification.isForegroundAwareByForce();
+    }
+  ```
+
+  More info at [documentation](https://docs.pushe.co/docs/android/notification/foreground)
+
+- Deprecated `UserNotification.withAndroidId`. Use `UserNotification.withDeviceId` instead
+
 ## 2.4.0
 - **NEW**: Added support for Huawei Mobile services push notification service.
   Huawei devices and other devices that have HMS core will now be supported by pushe
