@@ -6,25 +6,26 @@ buildscript {
         /**
          * Refer to Pushe release note for more information about versions
          * https://docs.pushe.co/docs/android-studio/releasenote
+         * or CHANGELOG.md
          */
-        pusheVersion = '2.4.1'
-        kotlin_version = '1.4.21'
+        pusheVersion = '2.5.1-rc02'
+        kotlin_version = '1.6.10'
     }
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:4.1.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
 allprojects {
     repositories {
-        jcenter()
         google()
+        mavenCentral()
         maven {url 'https://developer.huawei.com/repo/'}
     }
 }

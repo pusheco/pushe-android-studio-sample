@@ -229,7 +229,7 @@ Tag in name:value format (add)
                     })
                     10 -> prompt(this@MainActivity, "Notification", "Enter androidId to send a notification to that user", "androidId", "Send to ...", "Send to me", object : Stuff.Callback<String> {
                         override fun onPositiveButtonClicked(t: String) {
-                            val userNotification: UserNotification = UserNotification.withAndroidId(t)
+                            val userNotification: UserNotification = UserNotification.withDeviceId(t)
                             userNotification.setTitle("title1")
                             userNotification.setContent("content1")
                             Pushe.getPusheService(PusheNotification::class.java)?.sendNotificationToUser(userNotification)
@@ -237,7 +237,7 @@ Tag in name:value format (add)
                         }
 
                         override fun onNegativeButtonClicked(t: String) {
-                            val userNotification: UserNotification = UserNotification.withAndroidId(Pushe.getDeviceId())
+                            val userNotification: UserNotification = UserNotification.withDeviceId(Pushe.getDeviceId())
                             userNotification.setTitle("title1")
                             userNotification.setContent("content1")
                             Pushe.getPusheService(PusheNotification::class.java)?.sendNotificationToUser(userNotification)

@@ -16,15 +16,18 @@ Simple implementation of [Pushe](http://pushe.co) SDK using Android studio and J
 dependencies {
    implementation 'co.pushe.plus:base:2.4.1' // Core module + essential
    implementation 'co.pushe.plus:hms:2.4.1' // Huawei PushKit support
-   implementation 'co.pushe.plus:inappmessaging:2.4.1' // InAppMessaging
 }
 ```
+
+> Notice for `HMS` you should checkout the [documentation of HMS setup for Pushe](http://docs.pushe.co/docs/android/hms/intro), so you can actually use it
+
+All releases are published to `mavenCentral()` since the death of `JCenter`
 
 ```groovy
 allprojects {
     repositories {
-        maven { url 'https://developer.huawei.com/repo/' }
-        jcenter()
+        maven { url 'https://developer.huawei.com/repo/' } // For HMS (Huawei messaging service)
+        mavenCentral() // For Pushe itself (and many others)
         // ...
     }
 }
@@ -43,6 +46,7 @@ The manifest content will be a tag like this:
 <meta-data android:name="pushe_token"
             android:value="PUSHE_TOKEN" />
 ```
+
 If you need location-based features, add `Location permissions` to the manifest as well.
 
 

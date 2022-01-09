@@ -1,7 +1,16 @@
 # Change log
 
 ## 2.5.1-rc02
-- Add `AD_ID` permission to ensure `Pushe.getAdvertisinfId` works for Google since the change in [AdvertisingId policy](https://support.google.com/googleplay/android-developer/answer/6048248?hl=en)
+- Add `AD_ID` permission to ensure `Pushe.getAdvertisingId` works for Google since the change in [AdvertisingId policy](https://support.google.com/googleplay/android-developer/answer/6048248?hl=en)
+
+> **NOTE**: In order to remove `AD_ID` permission (which you may need to due to Google Play restrictions) use this code to remove the permission:
+> 
+> ```xml
+> <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
+> 
+> <application ... />
+> ```
+
 - Fix warning for `missing class co.pushe.plus.messaging.ParcelSendException` when minifying.
 
 ## 2.5.1-rc01
