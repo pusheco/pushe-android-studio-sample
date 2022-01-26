@@ -8,7 +8,7 @@ buildscript {
          * https://docs.pushe.co/docs/android-studio/releasenote
          * or CHANGELOG.md
          */
-        pusheVersion = '2.5.1-rc02'
+        pusheVersion = '2.5.1'
         kotlin_version = '1.6.10'
     }
 

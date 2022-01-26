@@ -11,6 +11,7 @@ android {
         // This is the application id (which must be the package name you add into panel of Pushe)
         applicationId "co.pushe.sample.as"
         minSdkVersion 17
+        //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 29
         versionCode 17
         multiDexEnabled true
