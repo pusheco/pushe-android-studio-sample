@@ -97,31 +97,6 @@ object Stuff {
           .show()
     }
 
-    /**
-     * Add text instead of replacing the text in android studio.
-     * Takes a textView and a text and adds the text to the textView.
-     */
-    fun addText(textView: TextView?, text: String) {
-        if (textView == null) return
-        val currentText = textView.text as String
-        val currentDateTimeString = DateFormat.getDateTimeInstance().format(Date())
-        val newText = "$currentText\n-----\n$text\nTime: $currentDateTimeString\n"
-        textView.text = newText
-    }
-
-    /**
-     * Add text instead of replacing the text in android studio.
-     * Takes a textView and a text and adds the text to the textView.
-     */
-    @JvmStatic
-    fun addText(scrollView: ScrollView, textView: TextView?, text: String) {
-        if (textView == null) return
-        val currentText = textView.text as String
-        val currentDateTimeString = DateFormat.getDateTimeInstance().format(Date())
-        val newText = "$currentText\n-----\n$text\nTime: $currentDateTimeString\n"
-        textView.text = newText
-        scrollView.fullScroll(View.FOCUS_DOWN)
-    }
 
     interface Callback<T> {
         fun onPositiveButtonClicked(t: T)

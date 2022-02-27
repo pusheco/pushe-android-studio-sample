@@ -8,7 +8,7 @@ buildscript {
          * https://docs.pushe.co/docs/android-studio/releasenote
          * or CHANGELOG.md
          */
-        pusheVersion = '2.5.1'
+        pusheVersion = '2.6.1-alpha02-SNAPSHOT'
         kotlin_version = '1.6.10'
     }
 
@@ -24,9 +24,11 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenLocal()
         google()
         mavenCentral()
         maven {url 'https://developer.huawei.com/repo/'}
+        maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
     }
 }
 

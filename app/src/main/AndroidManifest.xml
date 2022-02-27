@@ -33,9 +33,6 @@
         <meta-data
             android:name="pushe_log_level"
             android:value="debug" />
-        <meta-data
-            android:name="pushe_log_data_enabled"
-            android:value="yes" />
 
         <!-- Custom firebase service for Pushe -->
 
