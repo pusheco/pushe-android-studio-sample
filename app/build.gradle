@@ -2,6 +2,17 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
+
+ext {
+
+    /**
+     * Refer to Pushe release note for more information about versions
+     * https://docs.pushe.co/docs/android-studio/releasenote
+     * or CHANGELOG.md
+     */
+    pusheVersion = '2.6.3'
+}
+
 android {
     compileSdkVersion 31
 
@@ -49,6 +60,8 @@ dependencies {
 
     // Event bus: To send event through application from anywhere to anywhere
     implementation 'org.greenrobot:eventbus:3.2.0'
+
+
 
     implementation "co.pushe.plus:base:$pusheVersion"
     implementation "co.pushe.plus:hms:$pusheVersion"

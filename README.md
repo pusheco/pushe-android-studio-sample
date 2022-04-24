@@ -14,10 +14,14 @@ Simple implementation of [Pushe](http://pushe.co) SDK using Android studio and J
 
 ```groovy
 dependencies {
-   implementation 'co.pushe.plus:base:2.4.1' // Core module + essential
-   implementation 'co.pushe.plus:hms:2.4.1' // Huawei PushKit support
+    def latest = "$LATEST"
+    implementation("co.pushe.plus:base:$latest")
+    implementation("co.pushe.plus:hms:$latest") // Huawei PushKit support
 }
 ```
+
+![img](https://img.shields.io/maven-central/v/co.pushe.plus/core?color=purple&label=pushe&logo=android)
+
 
 > Notice for `HMS` you should checkout the [documentation of HMS setup for Pushe](http://docs.pushe.co/docs/android/hms/intro), so you can actually use it
 

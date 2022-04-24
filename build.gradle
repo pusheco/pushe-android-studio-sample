@@ -3,12 +3,6 @@
 buildscript {
 
     ext {
-        /**
-         * Refer to Pushe release note for more information about versions
-         * https://docs.pushe.co/docs/android-studio/releasenote
-         * or CHANGELOG.md
-         */
-        pusheVersion = '2.6.2'
         kotlin_version = '1.6.10'
     }
 
