@@ -10,18 +10,18 @@ ext {
      * https://docs.pushe.co/docs/android-studio/releasenote
      * or CHANGELOG.md
      */
-    pusheVersion = '2.6.3'
+    pusheVersion = '2.6.4'
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
 
     defaultConfig {
         // This is the application id (which must be the package name you add into panel of Pushe)
         applicationId "co.pushe.sample.as"
         minSdkVersion 17
-        targetSdkVersion 31
-        versionCode 18
+        targetSdkVersion 33
+        versionCode 19
         multiDexEnabled true
 
         versionName pusheVersion
